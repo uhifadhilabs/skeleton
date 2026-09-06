@@ -217,14 +217,21 @@ particular must round-trip cleanly).
 module on AssetMapper, the compiled asset manifest is stale until you rebuild
 it, and CSS/JS will serve the old version until you do.
 
+Each block below runs top to bottom as a single copy-paste. The six commands, in
+order, are: **diff** (writes your migration), **migrate** (applies it), **diff
+again** (must report "No changes"), **`seam:catalogue:seed`** (registers the
+installed modules in the catalogue), **`asset-map:compile`** (rebuilds the asset
+manifest), and **`cache:clear`**. After pasting, check that the second `diff`
+reported "No changes" — that line is the proof the schema matches the mapping.
+
 ### With the Symfony CLI
 
 ```bash
-symfony console doctrine:migrations:diff       # writes your migration
-symfony console doctrine:migrations:migrate    # applies it
-symfony console doctrine:migrations:diff       # MUST report "No changes"
-symfony console seam:catalogue:seed            # register installed modules in the catalogue
-symfony console asset-map:compile              # rebuild the asset manifest
+symfony console doctrine:migrations:diff
+symfony console doctrine:migrations:migrate
+symfony console doctrine:migrations:diff
+symfony console seam:catalogue:seed
+symfony console asset-map:compile
 symfony console cache:clear
 ```
 
@@ -233,7 +240,7 @@ symfony console cache:clear
 ```bash
 php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:migrate
-php bin/console doctrine:migrations:diff       # MUST report "No changes"
+php bin/console doctrine:migrations:diff
 php bin/console seam:catalogue:seed
 php bin/console asset-map:compile
 php bin/console cache:clear
