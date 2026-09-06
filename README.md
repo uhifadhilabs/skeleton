@@ -246,19 +246,32 @@ php bin/console asset-map:compile
 php bin/console cache:clear
 ```
 
-### Create the first administrator
+## 6. Create the first administrator
 
-There is no user yet. Create the first one interactively — this is how the first
-administrator comes to exist:
+The firewall is on (step 4), but there is no account to get through it yet — a
+fresh install has zero users. **This step is how the first administrator of the
+installation comes to exist.** It has to run *after* migrations, because it
+writes to the `team_user` table that step 5 just created.
+
+The command is **interactive** — it prompts for the email address and password
+(and the tier) at the terminal; there is nothing to pass on the command line.
+
+With the Symfony CLI:
+
+```bash
+symfony console team:user:create
+```
+
+Without it (plain PHP):
 
 ```bash
 php bin/console team:user:create
 ```
 
-You now have a running installation: sign in at `https://park.localhost` with
-the account you just created.
+You now have a running installation: open `https://park.localhost` and sign in
+with the account you just created.
 
-## 6. Capability modules (add as needed)
+## 7. Capability modules (add as needed)
 
 Capability modules are the ones you add when a deployment actually needs them.
 Each is the same two-step move: `composer require` it, then **re-run the
