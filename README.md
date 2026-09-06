@@ -9,115 +9,181 @@ A bare Symfony kernel, the seam (`uhifadhi/seam-module`), the shell
 copied once by `composer create-project` and then it is yours; every capability
 after that arrives as a module, installed with composer.
 
-## Start it
+Zero modules is a working installation: a fresh skeleton boots and serves a
+branded, themed, navigable shell with an empty sidebar. There is no user, no
+security bundle and no database yet — none of that is a placeholder, it is what
+an installation with nothing in it honestly looks like.
+
+---
+
+# Install guide
+
+The ordered path from nothing to a running installation with the core modules,
+a PostGIS database, migrations applied and a first administrator. Each step
+below depends on the one before it — the order is the point.
+
+## 1. Install the skeleton
 
 ```bash
-composer create-project uhifadhi/uhifadhi my-installation
-cd my-installation
-composer test          # the smoke test: it boots
-php -S localhost:8000 -t public
+composer create-project uhifadhi/uhifadhi park
+cd park
 ```
 
-It serves on the first request: a branded, themed, navigable shell with an empty
-sidebar, from the shell (`uhifadhi/shell-module`). There is no user, no security
-bundle and no module yet, and none of that is a placeholder — it is what an
-installation with nothing in it honestly looks like. `/` is open here in the
-plainest sense: there is no firewall in this project to close it. Installing
-identity (`uhifadhi/team-module`) is what changes that — its documented
-`security.yaml` is default-closed, and from then on a visitor who is not signed
-in is sent to `/login` from `/` and from everywhere else. Your first page extends one
-of the shell's three frames and fills one block:
+Use any name you like in place of `park`; that name becomes the directory and,
+in the next step, the local hostname and the database name.
 
-```twig
-{# templates/home/index.html.twig #}
-{% extends '@UhifadhiShell/page.html.twig' %}
+This installs **the seam and the shell** (`uhifadhi/seam-module` +
+`uhifadhi/shell-module`) with their recipes, and nothing else. The seam owns two
+tables — the module catalogue and the per-area install record — and the shell
+draws the UI. The project boots and serves immediately, but do not reach for
+migrations yet: the seam has no schema to create until an area module answers
+its area contract (step 3), and the schema it will create is PostGIS, so the
+database comes first.
 
-{% block shell_page_title %}Nothing installed yet{% endblock %}
+## 2. Give it a database — with fundi, before anything else
 
-{% block shell_page %}
-    <p>The first page of a new installation.</p>
-{% endblock %}
-```
-
-
-### Give it a database
-
-The seam (`uhifadhi/seam-module`) owns two tables — the catalogue and
-the per-area install record. Point `DATABASE_URL` at a database in
-`.env.local`:
-
-```dotenv
-# .env.local
-DATABASE_URL="postgresql://app:app@127.0.0.1:5432/my_installation?serverVersion=17&charset=utf8"
-```
-
-Then **give it an area.** The seam maps its per-area row to an interface, and
-until that interface resolves to a class there is no schema to create at all —
-the association is `NOT NULL`, so every metadata walk stops:
-
-```console
-$ bin/console doctrine:migrations:diff
-In MappingException.php line 72:
-  Class 'Uhifadhi\Seam\Entity\AreaInterface' does not exist
-```
-
-**Whoever knows the answer states the resolution**, and for an area that is
-`uhifadhi/area-module`:
+uhifadhi stores gazetted boundaries as PostGIS geometry, so the database needs
+the PostGIS extension. `fundi` runs a native PostGIS cluster for you — no
+Docker — and wires the app to it. Do this **now**, right after install and
+**before** the core modules and their migrations.
 
 ```bash
-composer require uhifadhi/area-module
+fundi init
 ```
 
-It brings a real area — a name, a gazetted MultiPolygon boundary, a public uuid —
-maps its own entity and prepends the resolution, the same way
-`uhifadhi/team-module` answers the user contract. **You write no `doctrine.yaml`
-line.** With both answer-modules installed, this project reaches
-`doctrine:migrations:diff` with zero doctrine edits.
+That writes `.fundi.local.yaml` into the project. Open it and **uncomment the
+one-line PostGIS opt-in**:
 
-The area's boundary is a PostGIS column, so the database needs the extension
-once:
-
-```sql
-CREATE EXTENSION IF NOT EXISTS postgis;
+```yaml
+database: postgis   # simplest: your ACTIVE (brew-linked) Postgres major, db = this dir's slug
 ```
 
-This used to be a hand-step: write your own `App\Entity\AreaOfInterest`, then
-uncomment a block in `config/packages/seam.yaml`. It is gone, and the block with
-it. **You write a `resolve_target_entities` line only to disagree** — an
-installation whose areas are its own entity names that class in
-`config/packages/doctrine.yaml` and wins, because prepended configuration loses
-to the application's.
+(PostGIS is opt-in because the default is plain SQL. Uncommenting this line is
+what switches fundi from "reuse your own Postgres" to "run a PostGIS cluster for
+this project.") It requires the toolchain once per Postgres major:
+`brew install postgresql@17 postgis`.
 
-Then:
+Then start the server:
 
 ```bash
-bin/console doctrine:database:create
-bin/console doctrine:migrations:diff      # your history, your migration
-bin/console doctrine:migrations:migrate
-bin/console seam:catalogue:seed
+fundi server:start
 ```
 
-The seam brings `doctrine/doctrine-migrations-bundle` with it — the bundle that
-adds tables brings the tool that creates them — but ships no migration versions
-of its own: the tables are the bundle's, the history is yours.
+This creates `.env.local` with the `DATABASE_URL`, spins up a PostGIS cluster
+(one per Postgres major, so 16- and 17-based projects coexist), `createdb`s this
+project's database and enables the `postgis` extension in it, and serves the app
+over SSL at `https://park.localhost` (your project name in place of `park`). You
+write nothing into `.env` — fundi injects the URL.
 
-## Grow it
+## 3. Install the core modules
 
-Installing a module is the whole extension mechanism. Because the recipe
-endpoint is configured, composer wires the bundle up for you — registration,
-config, routes:
+The core is four modules — **widget, team, area, map** — installed in one
+command:
 
 ```bash
-composer require uhifadhi/<name>-module
+composer require uhifadhi/widget-module uhifadhi/team-module uhifadhi/area-module uhifadhi/map-module
 ```
 
-**Status, honestly:** the seam and the shell are both here. A new project
-installs `uhifadhi/seam-module` and `uhifadhi/shell-module` with their recipes,
-boots, and serves a welcome page at `/` — a branded, navigable shell that says
-what the two installed packages are and what installing a module does.
+- **widget** — the shared widget/preset surface the other modules render into.
+- **team** — identity, the permission catalogue and sign-in. Installing it is
+  what closes the door: its documented `security.yaml` is default-closed, so
+  from here on a visitor who is not signed in is sent to `/login`.
+- **area** — a real area (a name, a gazetted MultiPolygon boundary, a public
+  UUID). It answers the seam's area contract — it maps its own entity and
+  prepends the resolution — so the seam finally has a schema to create. You
+  write no `doctrine.yaml` line.
+- **map** — the self-hosted Leaflet platform every map in the product is drawn
+  with. Map is infrastructure: it carries its own assets and is pulled in as a
+  dependency of area, listed here so it is an explicit, top-level requirement.
 
-That page, its controller and its route are all the shell's — but the address is
-this application's, because `config/routes/shell.yaml` is one line of consent:
+`storage-module` is **not** a core module — it is infrastructure a capability
+module (patrol) pulls in transitively, never something you install directly.
+
+Because the recipe endpoint is configured, composer wires each bundle up for
+you: registration, config and routes all land without a hand-edit.
+
+## 4. Run migrations
+
+The modules ship entities, not migration versions: the tables are the bundles',
+but the migration history is **yours**. So the install owns the migrations — you
+generate them, once, against the schema the installed modules describe.
+
+The pattern is **diff → migrate → diff again**, and the second diff **must say
+"No changes."** The first diff writes a migration for everything the modules
+added; migrate applies it; the second diff proves the schema now matches the
+mapping exactly. Churn on that second diff — a migration that keeps finding
+differences — is a bundle bug, not something to route around (PostGIS columns in
+particular must round-trip cleanly).
+
+`asset-map:compile` is **not optional** here: after installing or upgrading any
+module on AssetMapper, the compiled asset manifest is stale until you rebuild
+it, and CSS/JS will serve the old version until you do.
+
+### With the Symfony CLI
+
+```bash
+symfony console doctrine:migrations:diff       # writes your migration
+symfony console doctrine:migrations:migrate    # applies it
+symfony console doctrine:migrations:diff       # MUST report "No changes"
+symfony console seam:catalogue:seed            # register installed modules in the catalogue
+symfony console asset-map:compile              # rebuild the asset manifest
+symfony console cache:clear
+```
+
+### Without it (plain PHP)
+
+```bash
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:diff       # MUST report "No changes"
+php bin/console seam:catalogue:seed
+php bin/console asset-map:compile
+php bin/console cache:clear
+```
+
+### Create the first administrator
+
+There is no user yet. Create the first one interactively — this is how the first
+administrator comes to exist:
+
+```bash
+php bin/console team:user:create
+```
+
+You now have a running installation: sign in at `https://park.localhost` with
+the account you just created.
+
+## 5. Capability modules (add as needed)
+
+Capability modules are the ones you add when a deployment actually needs them.
+Each is the same two-step move: `composer require` it, then **re-run the
+migration steps in section 4** (diff → migrate → diff-again-says-"No changes" →
+`asset-map:compile` → `cache:clear`), because a new module adds its own tables
+and assets.
+
+- **Patrols** — `composer require uhifadhi/patrol-module`, then re-run the
+  migrations.
+- **Incidents** — `composer require uhifadhi/incident-module`, then re-run the
+  migrations.
+
+Adding a future capability module is another entry with the same shape: require
+it, then migrate.
+
+> **Current compatibility note.** As of the latest tags, `patrol-module`
+> (v0.5.0) and `incident-module` (v0.2.0) still constrain `area-module` to
+> `^0.2 … ^0.6` and `map-module` to `^0.1 || ^0.2`, while the core set above
+> resolves to `area-module` v0.11 and `map-module` v0.3. Requiring either
+> capability module on a latest-core install therefore fails to resolve today.
+> Both need a compatibility release widening those constraints (`area ^0.11`,
+> `map ^0.3`) before the two commands above will install. The install pattern is
+> correct and unchanged; only the published constraints are behind.
+
+---
+
+## Extending or replacing the welcome page
+
+The shell ships the welcome page at `/`, mounted by one line of consent in
+`config/routes/shell.yaml`:
 
 ```yaml
 shell:
@@ -127,7 +193,37 @@ shell:
 The shell loads that resource nowhere; the import is what makes `/` answer. Edit
 the file to point `/` at your own home screen, or delete it and the address is
 yours again — nothing is left behind. `debug:router` shows what you are
-replacing: a route named `welcome`.
+replacing: a route named `welcome`. Your own first page extends one of the
+shell's three frames and fills one block:
+
+```twig
+{# templates/home/index.html.twig #}
+{% extends '@UhifadhiShell/page.html.twig' %}
+
+{% block shell_page_title %}Home{% endblock %}
+
+{% block shell_page %}
+    <p>The first page of a new installation.</p>
+{% endblock %}
+```
+
+## Bring your own area (advanced)
+
+Installing `uhifadhi/area-module` is the normal way the seam's area contract is
+answered. To use your own area entity instead, implement
+`Uhifadhi\Seam\Entity\AreaInterface` (it asks for `getId()` and nothing else)
+and name it in **your own** `config/packages/doctrine.yaml` — application config
+overrules a module's prepended answer:
+
+```yaml
+doctrine:
+    orm:
+        resolve_target_entities:
+            Uhifadhi\Seam\Entity\AreaInterface: App\Entity\ManagementUnit
+```
+
+You write that line only to disagree. Install the module and there is no
+doctrine edit at all.
 
 ## Learn more
 
