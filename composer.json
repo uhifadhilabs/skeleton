@@ -27,7 +27,7 @@
         "symfony/framework-bundle": "8.1.*",
         "symfony/runtime": "8.1.*",
         "symfony/yaml": "8.1.*",
-        "uhifadhi/seam-module": "^0.1.2 || ^0.2",
+        "uhifadhi/seam-module": "^0.3",
         "uhifadhi/shell-module": "^0.8"
     },
     "require-dev": {
