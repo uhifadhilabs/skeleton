@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1db434c072fb22861c92c1d494648f15",
+    "content-hash": "af9ef92573bd7daa46badc4c4cbab3eb",
     "packages": [
         {
             "name": "composer/semver",
@@ -4973,16 +4973,16 @@
         },
         {
             "name": "uhifadhi/module-contracts",
-            "version": "v0.3.1",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uhifadhilabs/module-contracts.git",
-                "reference": "75631c12d8a03111a6bddd0499a5a0f9ade3cd54"
+                "reference": "6e09065c42f06e357875912f797ec925c0578cd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uhifadhilabs/module-contracts/zipball/75631c12d8a03111a6bddd0499a5a0f9ade3cd54",
-                "reference": "75631c12d8a03111a6bddd0499a5a0f9ade3cd54",
+                "url": "https://api.github.com/repos/uhifadhilabs/module-contracts/zipball/6e09065c42f06e357875912f797ec925c0578cd6",
+                "reference": "6e09065c42f06e357875912f797ec925c0578cd6",
                 "shasum": ""
             },
             "require": {
@@ -4996,7 +4996,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.3-dev"
+                    "dev-main": "0.5-dev"
                 }
             },
             "autoload": {
@@ -5023,22 +5023,22 @@
             ],
             "support": {
                 "issues": "https://github.com/uhifadhilabs/module-contracts/issues",
-                "source": "https://github.com/uhifadhilabs/module-contracts/tree/v0.3.1"
+                "source": "https://github.com/uhifadhilabs/module-contracts/tree/v0.5.0"
             },
-            "time": "2026-09-04T11:17:14+00:00"
+            "time": "2026-09-06T06:40:22+00:00"
         },
         {
             "name": "uhifadhi/seam-module",
-            "version": "v0.2.0",
+            "version": "v0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uhifadhilabs/seam-module.git",
-                "reference": "55514c4456f694baf2c4a4398861dc0f2575d8a0"
+                "reference": "58b08e61a100ff7fde036adddea43bafc45bfb12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uhifadhilabs/seam-module/zipball/55514c4456f694baf2c4a4398861dc0f2575d8a0",
-                "reference": "55514c4456f694baf2c4a4398861dc0f2575d8a0",
+                "url": "https://api.github.com/repos/uhifadhilabs/seam-module/zipball/58b08e61a100ff7fde036adddea43bafc45bfb12",
+                "reference": "58b08e61a100ff7fde036adddea43bafc45bfb12",
                 "shasum": ""
             },
             "require": {
@@ -5052,7 +5052,7 @@
                 "symfony/framework-bundle": "^7.3 || ^8.0",
                 "symfony/http-kernel": "^7.3 || ^8.0",
                 "symfony/uid": "^7.3 || ^8.0",
-                "uhifadhi/module-contracts": "^0.1 || ^0.2 || ^0.3"
+                "uhifadhi/module-contracts": "^0.4 || ^0.5"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.95",
@@ -5062,10 +5062,13 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.2-dev"
+                    "dev-main": "0.3-dev"
                 }
             },
             "autoload": {
+                "files": [
+                    "src/deprecated_area_interface_alias.php"
+                ],
                 "psr-4": {
                     "Uhifadhi\\Seam\\": "src/"
                 }
@@ -5093,22 +5096,22 @@
             ],
             "support": {
                 "issues": "https://github.com/uhifadhilabs/seam-module/issues",
-                "source": "https://github.com/uhifadhilabs/seam-module/tree/v0.2.0"
+                "source": "https://github.com/uhifadhilabs/seam-module/tree/v0.3.1"
             },
-            "time": "2026-09-05T09:18:17+00:00"
+            "time": "2026-09-06T06:42:45+00:00"
         },
         {
             "name": "uhifadhi/shell-module",
-            "version": "v0.7.0",
+            "version": "v0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uhifadhilabs/shell-module.git",
-                "reference": "092ed7ee2d6abaa84c0b1ddfdbb29ed47c1a6a7f"
+                "reference": "b10127011560f9c33e96566414d4d3e53ce00e5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uhifadhilabs/shell-module/zipball/092ed7ee2d6abaa84c0b1ddfdbb29ed47c1a6a7f",
-                "reference": "092ed7ee2d6abaa84c0b1ddfdbb29ed47c1a6a7f",
+                "url": "https://api.github.com/repos/uhifadhilabs/shell-module/zipball/b10127011560f9c33e96566414d4d3e53ce00e5d",
+                "reference": "b10127011560f9c33e96566414d4d3e53ce00e5d",
                 "shasum": ""
             },
             "require": {
@@ -5137,7 +5140,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.7-dev"
+                    "dev-main": "0.8-dev"
                 }
             },
             "autoload": {
@@ -5170,9 +5173,9 @@
             ],
             "support": {
                 "issues": "https://github.com/uhifadhilabs/shell-module/issues",
-                "source": "https://github.com/uhifadhilabs/shell-module/tree/v0.7.0"
+                "source": "https://github.com/uhifadhilabs/shell-module/tree/v0.8.0"
             },
-            "time": "2026-09-05T09:02:44+00:00"
+            "time": "2026-09-05T16:25:52+00:00"
         }
     ],
     "packages-dev": [
@@ -5900,16 +5903,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "14.3.1",
+            "version": "14.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "6ce313bb110384148d1dc7695a99175f59529069"
+                "reference": "93d62632fb675b76c9b941fdcfcfa10ffb9dea75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6ce313bb110384148d1dc7695a99175f59529069",
-                "reference": "6ce313bb110384148d1dc7695a99175f59529069",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/93d62632fb675b76c9b941fdcfcfa10ffb9dea75",
+                "reference": "93d62632fb675b76c9b941fdcfcfa10ffb9dea75",
                 "shasum": ""
             },
             "require": {
@@ -5928,7 +5931,7 @@
                 "theseer/tokenizer": "^2.0.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^13.3.1"
+                "phpunit/phpunit": "^13.3.2"
             },
             "suggest": {
                 "ext-pcov": "PHP extension that provides line coverage",
@@ -5966,7 +5969,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.3.1"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.3.2"
             },
             "funding": [
                 {
@@ -5986,7 +5989,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-16T05:23:47+00:00"
+            "time": "2026-09-04T03:46:43+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",

@@ -12,6 +12,10 @@
             "sidebar-tree": {
                 "enabled": true,
                 "fetch": "eager"
+            },
+            "localtime": {
+                "enabled": true,
+                "fetch": "eager"
             }
         }
     },
