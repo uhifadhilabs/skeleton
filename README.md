@@ -85,9 +85,10 @@ composer require uhifadhi/widget-module uhifadhi/team-module uhifadhi/area-modul
 ```
 
 - **widget** — the shared widget/preset surface the other modules render into.
-- **team** — identity, the permission catalogue and sign-in. Installing it is
-  what closes the door: its documented `security.yaml` is default-closed, so
-  from here on a visitor who is not signed in is sent to `/login`.
+- **team** — identity, the permission catalogue and sign-in. It brings the
+  `team_user` storage, the `/login` screen and the `team_user_provider`, but the
+  firewall is not on until you edit `security.yaml` in step 4 — installing team
+  makes login *possible*, step 4 makes it *active*.
 - **area** — a real area (a name, a gazetted MultiPolygon boundary, a public
   UUID). It answers the seam's area contract — it maps its own entity and
   prepends the resolution — so the seam finally has a schema to create. You
@@ -102,7 +103,104 @@ module (patrol) pulls in transitively, never something you install directly.
 Because the recipe endpoint is configured, composer wires each bundle up for
 you: registration, config and routes all land without a hand-edit.
 
-## 4. Run migrations
+## 4. Activate login (edit `config/packages/security.yaml`)
+
+Installing `team-module` gives you user storage, a `/login` screen and the
+`team_user_provider` — but it does **not** turn the firewall on. `security.yaml`
+is application-owned by Symfony's design (only your project knows which paths are
+public), so a Flex recipe may not write it — this is a **manual step, on
+purpose**. Until you do it the module is installed and inert: `/login` renders,
+but nothing authenticates, because the stock config still looks users up in
+memory. Skip this and a fresh park cannot log in, not even as the admin you
+create in the next step.
+
+Replace `config/packages/security.yaml` with the file below. **It is the whole
+file — one paste over the stock one, nothing to edit afterward** (the commented
+lines are examples you may want later). This is the canonical config from
+`team-module`'s own README, which carries the fully-annotated original:
+
+```yaml
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    # The staff accounts, looked up by email. This replaces the stock
+    # users_in_memory provider — you have user storage now.
+    providers:
+        team_user_provider:
+            entity:
+                class: Uhifadhi\Team\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_profiler|_wdt|assets|build)/
+            security: false
+
+        main:
+            lazy: true
+            provider: team_user_provider
+
+            # Refuses a deactivated account at the door (accounts are never
+            # deleted — leaving is deactivation).
+            user_checker: team.user_checker
+
+            # Intercepts the POST to /login. login_path and check_path are the
+            # same route so a failed sign-in re-renders the form with its error.
+            form_login:
+                login_path: team_login
+                check_path: team_login
+                enable_csrf: true
+                default_target_path: '/'   # where a fresh sign-in lands
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # one week
+                always_remember_me: false
+
+            logout:
+                path: team_logout
+                target: team_login
+
+            # Super Admin impersonation (guarded by ROLE_ALLOWED_TO_SWITCH below).
+            switch_user: true
+
+            # Blunts credential stuffing — needs symfony/rate-limiter installed.
+            #login_throttling:
+            #    max_attempts: 5
+
+    # The tier ladder — NOT a permission tree. Admin+ hold the three umbrella
+    # capability roles; Staff grant nothing by tier (their capabilities come
+    # from their assigned position). There is no ROLE_MANAGER.
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_AREAS, ROLE_MODULES, ROLE_TEAM]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    # ONLY THE FIRST MATCHING RULE APPLIES. This is a back-of-house install:
+    # the last rule takes everything, and each public path is a deliberate
+    # exception. The three that MUST stay public are the ones a stranger reaches
+    # with nobody to ask — sign-in, forgotten-password, and an invite link.
+    access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/reset-password, roles: PUBLIC_ACCESS }
+        - { path: ^/invite/, roles: PUBLIC_ACCESS }
+        #- { path: ^/team, roles: ROLE_TEAM }     # the umbrella; the row is the voter's
+        #- { path: ^/areas, roles: ROLE_AREAS }   # the umbrella; the verb is the voter's
+        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
+
+# Hashing is expensive by design; floored in tests only (documented Symfony practice).
+when@test:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4
+```
+
+With this in place `/` is closed and an unauthenticated visitor is sent to
+`/login` — which is exactly what makes the admin you create next able to sign in.
+
+## 5. Run migrations
 
 The modules ship entities, not migration versions: the tables are the bundles',
 but the migration history is **yours**. So the install owns the migrations — you
@@ -153,11 +251,11 @@ php bin/console team:user:create
 You now have a running installation: sign in at `https://park.localhost` with
 the account you just created.
 
-## 5. Capability modules (add as needed)
+## 6. Capability modules (add as needed)
 
 Capability modules are the ones you add when a deployment actually needs them.
 Each is the same two-step move: `composer require` it, then **re-run the
-migration steps in section 4** (diff → migrate → diff-again-says-"No changes" →
+migration steps in section 5** (diff → migrate → diff-again-says-"No changes" →
 `asset-map:compile` → `cache:clear`), because a new module adds its own tables
 and assets.
 
