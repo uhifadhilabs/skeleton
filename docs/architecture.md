@@ -1,7 +1,7 @@
 # The architecture
 
 **Uhifadhi is one skeleton and a set of modules.** The skeleton
-(`uhifadhi/uhifadhi` — this repository) is copied once by
+(`uhifadhi/skeleton` — this repository) is copied once by
 `composer create-project` and then it is yours; it is never updated again.
 Everything else arrives as a module, updated forever through composer. A module
 **registers with the seam** (`uhifadhi/seam-module`) and **renders in the shell**

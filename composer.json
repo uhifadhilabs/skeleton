@@ -1,5 +1,5 @@
 {
-    "name": "uhifadhi/uhifadhi",
+    "name": "uhifadhi/skeleton",
     "description": "The uhifadhi project template — a bare Symfony kernel wired to the uhifadhilabs recipe endpoint. Installed once; every capability arrives on top as a module bundle.",
     "type": "project",
     "keywords": [

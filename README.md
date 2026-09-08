@@ -1,4 +1,4 @@
-# uhifadhi/uhifadhi
+# uhifadhi/skeleton
 
 The project skeleton every uhifadhi installation starts from.
 
@@ -25,7 +25,7 @@ below depends on the one before it — the order is the point.
 ## 1. Install the skeleton
 
 ```bash
-composer create-project uhifadhi/uhifadhi park
+composer create-project uhifadhi/skeleton park
 cd park
 ```
 
