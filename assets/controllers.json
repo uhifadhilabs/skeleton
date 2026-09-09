@@ -5,60 +5,6 @@
                 "enabled": true,
                 "fetch": "eager"
             }
-        },
-        "@uhifadhi/shell-bundle": {
-            "theme": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "sidebar": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "sidebar-tree": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "localtime": {
-                "enabled": true,
-                "fetch": "eager"
-            }
-        },
-        "@uhifadhi/team-bundle": {
-            "permission-group": {
-                "enabled": true,
-                "fetch": "lazy"
-            },
-            "department": {
-                "enabled": true,
-                "fetch": "lazy"
-            }
-        },
-        "@uhifadhi/area-bundle": {
-            "area-register": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "area-upload": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "area-map": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "area-index-map": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "area-presets": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "module-order": {
-                "enabled": true,
-                "fetch": "eager"
-            }
         }
     },
     "entrypoints": []

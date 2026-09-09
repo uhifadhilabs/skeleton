@@ -13,6 +13,7 @@ arrives as a module, each its own package.
 - [What is in this repository](#what-is-in-this-repository)
 - [What is deliberately not in it](#what-is-deliberately-not-in-it)
 - [Why the starter carries the security file](#why-the-starter-carries-the-security-file)
+- [Enabling the core's Stimulus controllers](#enabling-the-cores-stimulus-controllers)
 - [Where a module fits](#where-a-module-fits)
 
 ## The three layers
@@ -82,6 +83,25 @@ file naming a class that is not installed cannot compile.
 A module never adds a rule to it. What a signed-in person may do is per action,
 per object and per area, which a path rule cannot express; the module asks that
 question in its own controller against the permissions it declared.
+
+## Enabling the core's Stimulus controllers
+
+The core ships its front-end behaviour as Stimulus controllers under three
+AssetMapper namespaces: `@uhifadhi/shell-bundle`, `@uhifadhi/team-bundle` and
+`@uhifadhi/area-bundle`. What enables them here is one re-export file per
+controller in `assets/controllers/`, named so that the identifier StimulusBundle
+derives is the one the core's own markup asks for
+(`uhifadhi--shell-bundle--theme` and its siblings).
+
+`assets/controllers.json` cannot do it. That file keys controllers by an
+**installed** composer package and resolves the key to that package's directory
+on disk. The core is one package holding five bundles, so `@uhifadhi/shell-bundle`
+names something Composer knows about — the core declares it — and nothing that
+exists as a directory. `asset-map:compile` stops with "Could not find package
+"uhifadhi/shell-bundle" referred to from controllers.json".
+
+The files are the installation's. Delete one and that control goes inert: the
+markup stays correct and simply has no behaviour behind it.
 
 ## Where a module fits
 
