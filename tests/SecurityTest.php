@@ -119,4 +119,16 @@ final class SecurityTest extends WebTestCase
             self::getContainer()->get(ApiTokenAuthenticator::class),
         );
     }
+
+    /**
+     * THE FORM IS THROTTLED. Five attempts a minute is the difference between
+     * a person mistyping a passphrase and somebody working a credential list,
+     * and it is this file's decision, not the bundle's.
+     */
+    public function testTheSignInFormIsThrottled(): void
+    {
+        self::bootKernel();
+
+        self::assertTrue(self::getContainer()->has('security.listener.login_throttling.main'));
+    }
 }

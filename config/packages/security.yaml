@@ -69,6 +69,10 @@ security:
                 enable_csrf: true
                 default_target_path: /
 
+            # Five a minute: room for a mistyped passphrase, none for a list.
+            login_throttling:
+                max_attempts: 5
+
             logout:
                 path: team_logout
                 target: team_login
