@@ -1,5 +1,11 @@
 {
     "controllers": {
+        "@symfony/ux-chartjs": {
+            "chart": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        },
         "@uhifadhi/uhifadhi": {
             "theme": {
                 "enabled": true,
@@ -46,12 +52,6 @@
                 "fetch": "eager"
             },
             "module-order": {
-                "enabled": true,
-                "fetch": "eager"
-            }
-        },
-        "@symfony/ux-chartjs": {
-            "chart": {
                 "enabled": true,
                 "fetch": "eager"
             }
