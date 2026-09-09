@@ -51,6 +51,9 @@ final class SmokeTest extends KernelTestCase
         yield 'the welcome page' => ['welcome', '/'];
         yield 'the sign-in screen' => ['team_login', '/login'];
         yield 'the area register' => ['area_index', '/areas'];
+        // The name is the core's, and the assertion is on the address as much
+        // as on the name: this is where an administrator switches a module on
+        // for one area.
         yield 'an area\'s module grid' => ['seam_area_modules', '/areas/{uuid}/modules'];
     }
 
