@@ -1,6 +1,6 @@
 {
     "name": "uhifadhi/skeleton",
-    "description": "The uhifadhi project template — a bare Symfony kernel wired to the uhifadhilabs recipe endpoint. Installed once; every capability arrives on top as a module bundle.",
+    "description": "The uhifadhi project template — a bare Symfony application carrying the uhifadhi core. Copied once by create-project; every capability arrives on top as a module.",
     "type": "project",
     "keywords": [
         "conservation",
@@ -17,6 +17,12 @@
         }
     ],
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/uhifadhilabs/uhifadhi"
+        }
+    ],
     "require": {
         "php": ">=8.4",
         "ext-ctype": "*",
@@ -26,12 +32,12 @@
         "symfony/flex": "^2.11",
         "symfony/framework-bundle": "8.1.*",
         "symfony/runtime": "8.1.*",
+        "symfony/security-bundle": "8.1.*",
         "symfony/yaml": "8.1.*",
-        "uhifadhi/seam-module": "^0.3",
-        "uhifadhi/shell-module": "^0.8"
+        "uhifadhi/uhifadhi": "^1.0@dev"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.95.24",
+        "friendsofphp/php-cs-fixer": "^3.95.25",
         "phpunit/phpunit": "^13.3.2",
         "symfony/browser-kit": "8.1.*"
     },

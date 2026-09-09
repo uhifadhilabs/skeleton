@@ -1,0 +1,16 @@
+# The team's screens: signing in and out, the password reset, accepting an
+# invitation, the people register, positions and departments, and the endpoint a
+# field client asks for a token at.
+#
+# The addresses are the controllers' own, declared as attributes beside the code
+# that answers them. This file is what mounts them, and it is yours: unmount a
+# screen by removing this import, and it is gone from `debug:router` with
+# nothing left behind.
+#
+# WHO MAY REACH THEM IS NOT DECIDED HERE. config/packages/security.yaml puts
+# everything behind sign-in and names the three of these a stranger must reach
+# (`/login`, `/reset-password`, `/invite/…`); what a signed-in person may DO on
+# them is checked in the controllers.
+team:
+    resource: '@TeamBundle/Controller/'
+    type: attribute

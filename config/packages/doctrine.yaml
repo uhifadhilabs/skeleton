@@ -14,21 +14,21 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            # THE STOCK BLOCK, AND IT IS RIGHT. doctrine-bundle's Flex recipe
-            # writes this assuming the symfony/skeleton's `App\` root, and the
-            # skeleton's root IS `App\` (composer.json autoload.psr-4) — the
-            # skeleton is
-            # a stock Symfony application, and `Uhifadhi\` is reserved for the
-            # platform's own packages (`Uhifadhi\Seam\`, and its siblings).
+            # THIS BLOCK MAPS YOUR OWN ENTITIES, AND NOTHING ELSE. The
+            # application's PHP root is `App\` (composer.json autoload.psr-4),
+            # so an entity you write in src/Entity/ is mapped by these five
+            # lines and would be invisible without them. `Uhifadhi\` is the
+            # core's namespace and is never mapped here.
             #
-            # It reads as boilerplate and is kept in the skeleton on purpose:
-            # the skeleton is copied once and never updated, so a line here is
-            # one every future installation is stuck with, and this one has to
-            # be present and correct before any entity of YOURS can map at all.
+            # NOTHING THE CORE OWNS DEPENDS ON IT. Each core bundle maps its own
+            # entity directory and states its own resolutions, so areas, people
+            # and the module registry are mapped whether or not you ever write
+            # an entity of your own. The same is true of every module.
             #
-            # It is not what maps an area. uhifadhi/area-module maps its own
-            # entity directory and prepends the seam's resolution, so nothing
-            # about the area depends on this block — see the README.
+            # It is kept even though a fresh installation has no entity yet:
+            # this file is copied once and then belongs to the installation, and
+            # this block has to be present and correct before the first entity
+            # of yours can map at all.
             App:
                 type: attribute
                 is_bundle: false

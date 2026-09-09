@@ -1,0 +1,27 @@
+# The team — people: accounts, positions, departments, and the screens somebody
+# signs in, resets a password or accepts an invitation through.
+#
+# NONE OF THESE FOUR KEYS IS SECURITY. Who may reach what, how long a session
+# lives, whether there is a remember-me cookie: that is config/packages/security.yaml,
+# which this installation owns. What is here is what the SCREENS and the LETTERS
+# need and a firewall has no opinion about.
+#
+# The tree is closed, so an invented key fails loudly.
+team:
+    # Where a visitor who asks for /login while already signed in is sent. A
+    # path, not a route name — the team cannot know what your home screen is
+    # called.
+    after_sign_in_path: /
+
+    # The sentence under the mark on the sign-in card.
+    sign_in_lede: 'Analytical observatory for protected areas. Sign in to reach this installation and its modules.'
+
+    # The address invitations and password-reset links come from. EMPTY MEANS
+    # THIS INSTALLATION CANNOT SEND: the invite path is then offered and refused
+    # in writing, and the forgot-password screen says so rather than swallowing
+    # the request. Set it, and set MAILER_DSN in .env.local, before you invite
+    # anybody.
+    mail_from: ''
+
+    # What an email calls this installation in its subject line.
+    installation_name: Uhifadhi

@@ -1,87 +1,30 @@
-# The shell (uhifadhi/shell-module) — what this installation looks like: the
-# document, the page frame, the sidebar and top bar, the navigation seams and
-# the theme every module's pages mount into.
+# The shell — what this installation looks like: the document, the page frame,
+# the sidebar and top bar, and the theme every module's pages mount into.
 #
-# NOTHING BELOW IS REQUIRED. All three keys have defaults, and the config tree
-# is closed, so an unknown key fails loudly rather than being ignored. A fresh
-# installation with this bundle and nothing else boots and SERVES: a branded,
-# themed, navigable shell with an empty sidebar. There is no database, no
-# migration and no entity behind any of this — the shell draws, it does not
-# remember.
+# NOTHING BELOW IS REQUIRED. All three keys have defaults, and the tree is
+# closed, so an unknown key fails loudly rather than being ignored. There is no
+# database, no migration and no entity behind any of it — the shell draws, it
+# does not remember.
 #
 # THERE IS DELIBERATELY NO KEY LISTING NAV ENTRIES, AREA TABS OR MODULES. Those
-# arrive as data through the two seams at the bottom of this file, because a nav
-# declared in YAML is a nav no permission check ever reaches.
+# arrive as data through the shell's contracts, because a nav declared in YAML
+# is a nav no permission check ever reaches.
 shell:
     # The wordmark beside the brand mark in the sidebar. Yours to change: the
-    # shell cannot know what this deployment calls itself.
+    # shell cannot know what this installation calls itself.
     brand_name: Uhifadhi
 
     # Where the brand mark links. The shell is installed BY an application and
-    # cannot know its route names, so it takes one — and tolerates its absence:
-    # until a route by this name exists, the mark links to `/` rather than
-    # failing the page. That is what makes the first boot of a new installation
-    # work before it has grown a home screen.
-    home_route: dashboard_index
+    # cannot know its route names, so it takes one. `welcome` is the route
+    # config/routes/shell.yaml mounts at `/`; point this at your own home screen
+    # when you have one.
+    home_route: welcome
 
-    # What a visitor who has NEVER chosen a theme gets: light, dark, or
-    # `system` to honour what their operating system already says. All three
-    # are real answers — `system` is not a synonym for light.
+    # What a visitor who has NEVER chosen a theme gets: light, dark, or `system`
+    # to honour what their operating system already says. All three are real
+    # answers — `system` is not a synonym for light.
     #
     # Whatever this says, the choice is applied by an inline script in the
     # document head, BEFORE the first paint, so nobody is shown the wrong
     # palette for a frame. A link may override it for one view with `?theme=dark`.
     default_theme: light
-
-# THE TWO LINES THIS RECIPE CANNOT WRITE FOR YOU — and unlike the seam's, they
-# are genuinely OPTIONAL. The shell renders without either of them; it just has
-# nothing to put in the sidebar, which is the honest picture of an installation
-# that has nothing in it yet.
-#
-# They belong in config/services.yaml rather than here, because both are service
-# wiring and neither is a setting:
-#
-#   services:
-#       # WHAT GOES IN THE SIDEBAR. Implement
-#       # Uhifadhi\Shell\Contract\NavigationSourceInterface and return
-#       # NavSection/NavItem value objects. Your application has the areas, the
-#       # viewer and the permission voters; folding those into "these rows, in
-#       # this order" is a reading for a person on a page, and it is yours.
-#       #
-#       # GATING IS YOURS TOO: the shell holds no authorization service and asks
-#       # nothing about the viewer. A row somebody may not have is one you do not
-#       # return — there is no "hidden" flag, because a hidden row is a row that
-#       # leaks its existence to whoever reads the HTML.
-#       #
-#       # The tag is written by hand because a reusable bundle's services are not
-#       # autoconfigured. More than one class may carry it; a module bundle can
-#       # contribute a row of its own the same way.
-#       App\Shell\HostNavigation:
-#           tags: ['shell.nav_section']
-#
-#       # WHERE THE VIEWER IS, AND WHICH SIBLING SCREENS IT HAS. Implement
-#       # Uhifadhi\Shell\Contract\AreaShellSourceInterface — tabs() for the strip
-#       # above a page, place() for the middle segment of its title.
-#       #
-#       # An ALIAS, not a tag: two things claiming to know where the viewer is,
-#       # is exactly the disagreement this bundle exists to prevent. Exactly one
-#       # tab must be lit, and a screen somebody may not reach is ABSENT rather
-#       # than greyed out — a disabled tab tells a person a screen exists and
-#       # they are not trusted with it, which is worse than not mentioning it.
-#       shell.area_shell_source: '@App\Shell\AreaShell'
-#
-# AND ONE LINE IN YOUR TEMPLATES. The shell's stylesheet carries the theme
-# tokens and its own furniture; it is linked by the document, first, so your
-# application's stylesheet can override it. Your pages reach the shell by
-# extending one of its three frames:
-#
-#   {% extends '@UhifadhiShell/page.html.twig' %}   {# a normal page #}
-#   {% extends '@UhifadhiShell/shell.html.twig' %}  {# full-bleed: no page frame #}
-#   {% extends '@UhifadhiShell/document.html.twig' %} {# print/export: no furniture #}
-#
-# WHAT THE SHELL DOES NOT SHIP, and you do: the two Stimulus controllers its
-# markup names — `sidebar` (the collapsed rail) and `sidebar-tree` (folding),
-# plus `theme` for the toggle. A bundle cannot contribute an importmap entry, so
-# the markup is here and the behaviour is yours. Until you add them the shell
-# renders correctly and simply does not fold — attributes with no controller
-# behind them are inert, never broken.

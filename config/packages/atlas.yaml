@@ -1,0 +1,31 @@
+# The atlas — the maps, charts and calendars every screen draws through, and the
+# chrome they all wear.
+#
+# NOTHING BELOW IS REQUIRED; the tree is closed, so an invented key fails
+# loudly. The one thing an installation usually wants to say is where satellite
+# imagery comes from.
+atlas:
+    satellite:
+        # esri   — keyless World Imagery. No account, no session, no key. The
+        #          default, and the understudy for both others: a map is never
+        #          blank for want of a key.
+        # google — the Map Tiles API. Set `google.api_key` (from an env var) and
+        #          name this provider to opt in.
+        # custom — your own XYZ/WMTS source. `custom.url_template` is then
+        #          REQUIRED, because a custom source with no url is a blank map
+        #          at 3am rather than an error at deploy time.
+        provider: esri
+
+        # Deepest zoom the satellite layer is asked for.
+        max_zoom: 19
+
+        #google:
+        #    # Public by nature — it travels in every tile URL. Restrict it by
+        #    # HTTP referrer at Google.
+        #    api_key: '%env(default::UHIFADHI_GOOGLE_MAPS_API_KEY)%'
+
+        #custom:
+        #    url_template: 'https://tiles.example.org/{z}/{x}/{y}.jpg'
+        #    # The credit line the source's licence requires. Shown on every map
+        #    # that draws it.
+        #    attribution: 'Imagery © Example Mapping Agency'

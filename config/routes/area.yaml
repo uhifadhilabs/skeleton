@@ -1,0 +1,12 @@
+# The area screens: the register, an area's overview, its zones, its settings
+# and the grid where an administrator switches modules on and off for it.
+#
+# The addresses are the controllers' own, declared as attributes beside the code
+# that answers them. This file is what mounts them, and it is yours.
+#
+# Every module renders under `/areas/{uuid}/modules/<its slug>`, and a module
+# mounts its own routes through its own file beside this one. Nothing here has
+# to change when a module arrives.
+area:
+    resource: '@AreaBundle/Controller/'
+    type: attribute

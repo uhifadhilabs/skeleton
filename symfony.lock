@@ -47,6 +47,9 @@
             ".php-cs-fixer.dist.php"
         ]
     },
+    "fundistadi/postgis-bundle": {
+        "version": "v0.5.1"
+    },
     "phpunit/phpunit": {
         "version": "13.3",
         "recipe": {
@@ -122,6 +125,30 @@
             ".editorconfig"
         ]
     },
+    "symfony/mailer": {
+        "version": "8.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "09051cfde49476e3c12cd3a0e44289ace1c75a4f"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
+    "symfony/property-info": {
+        "version": "8.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.3",
+            "ref": "dae70df71978ae9226ae915ffd5fad817f5ca1f7"
+        },
+        "files": [
+            "config/packages/property_info.yaml"
+        ]
+    },
     "symfony/routing": {
         "version": "8.1",
         "recipe": {
@@ -133,6 +160,19 @@
         "files": [
             "config/packages/routing.yaml",
             "config/routes.yaml"
+        ]
+    },
+    "symfony/security-bundle": {
+        "version": "8.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.4",
+            "ref": "c42fee7802181cdd50f61b8622715829f5d2335c"
+        },
+        "files": [
+            "config/packages/security.yaml",
+            "config/routes/security.yaml"
         ]
     },
     "symfony/stimulus-bundle": {
@@ -172,6 +212,9 @@
             "ref": "0df5844274d871b37fc3816c57a768ffc60a43a5"
         }
     },
+    "symfony/ux-chartjs": {
+        "version": "v3.4.0"
+    },
     "symfony/ux-icons": {
         "version": "3.4",
         "recipe": {
@@ -185,29 +228,16 @@
             "config/packages/ux_icons.yaml"
         ]
     },
-    "uhifadhi/seam-module": {
-        "version": "0.1",
+    "symfony/ux-map": {
+        "version": "3.4",
         "recipe": {
-            "repo": "github.com/uhifadhilabs/recipes",
+            "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "0.1",
-            "ref": "087830f88ed788e60eb989b8e575b1c4ba819126"
+            "version": "2.19",
+            "ref": "04de870967555f00bd82f542e9e2d29683c3d39e"
         },
         "files": [
-            "config/packages/seam.yaml"
-        ]
-    },
-    "uhifadhi/shell-module": {
-        "version": "0.5",
-        "recipe": {
-            "repo": "github.com/uhifadhilabs/recipes",
-            "branch": "main",
-            "version": "0.5",
-            "ref": "6b06537a9fd6b9851613b518220d75e8c50a1096"
-        },
-        "files": [
-            "config/packages/shell.yaml",
-            "config/routes/shell.yaml"
+            "config/packages/ux_map.yaml"
         ]
     }
 }

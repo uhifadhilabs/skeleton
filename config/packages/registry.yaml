@@ -1,0 +1,26 @@
+# The registry — the runtime every uhifadhi module registers with: the
+# catalogue of what this installation has, the record of what each area
+# switched on, and the permissions modules declare.
+#
+# NOTHING BELOW IS REQUIRED. Both keys have defaults and the tree is closed, so
+# an unknown key fails loudly rather than being ignored.
+#
+# THERE IS DELIBERATELY NO KEY LISTING MODULES. Installing a module IS the
+# declaration, and a second place to enable one is a second place for the two to
+# disagree. The catalogue reconciles itself with what is installed; there is no
+# command to run.
+registry:
+    # Where a module the catalogue cannot place is filed. A module hands its
+    # category over as a string and the registry coerces it, so a module written
+    # by somebody else can never break the catalogue with a typo.
+    default_category: operations
+
+# Dev-only tooling hangs off this flag, so a production installation never grows
+# machinery that writes invented catalogue rows.
+when@dev:
+    registry:
+        dev_tools: true
+
+when@test:
+    registry:
+        dev_tools: true

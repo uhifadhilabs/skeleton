@@ -1,0 +1,15 @@
+# The areas — the ground: areas, their boundaries, the zones inside them, and
+# the overview every module contributes to.
+#
+# THIS FILE IS EMPTY OF SETTINGS, AND THAT IS THE ANSWER. There is no `area:`
+# key below because the areas have nothing an installation configures: what an
+# area is called, where its boundary runs and which modules it runs are DATA,
+# entered on the screens and kept in the database, never lines in a YAML file.
+# Writing `area:` here with anything under it fails at compile time.
+#
+# What the areas DO need from this installation is a database, which
+# config/packages/doctrine.yaml and DATABASE_URL supply, and a migration, which
+# `doctrine:migrations:diff` writes. See the README.
+#
+# The file is kept so `config/packages/` has one entry per core bundle and
+# nobody has to wonder whether the areas were forgotten.

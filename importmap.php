@@ -26,4 +26,15 @@ return [
     'app' => ['path' => './assets/app.js', 'entrypoint' => true],
     '@hotwired/stimulus' => ['version' => '3.2.2'],
     '@symfony/stimulus-bundle' => ['path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js'],
+    'chart.js' => ['version' => '4.5.1'],
+    '@kurkle/color' => ['version' => '0.3.4'],
+
+    // The atlas publishes the basemap sources, the boundary drawing and the map
+    // chrome as three modules, so every map in this installation — the core's
+    // and every module's — draws the same ground with the same controls. The
+    // names are bare specifiers on purpose: the files may move, these lines are
+    // what every importer resolves against.
+    'uhifadhi/basemaps' => ['path' => '@uhifadhi/atlas-bundle/basemaps.js'],
+    'uhifadhi/boundary' => ['path' => '@uhifadhi/atlas-bundle/boundary.js'],
+    'uhifadhi/map-chrome' => ['path' => '@uhifadhi/atlas-bundle/chrome.js'],
 ];
