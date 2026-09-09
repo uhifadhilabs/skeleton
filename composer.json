@@ -1,6 +1,6 @@
 {
     "name": "uhifadhi/skeleton",
-    "description": "The uhifadhi project template — a bare Symfony application carrying the uhifadhi core. Copied once by create-project; every capability arrives on top as a module.",
+    "description": "The open-source observatory for nature conservation and protected areas.",
     "type": "project",
     "keywords": [
         "conservation",

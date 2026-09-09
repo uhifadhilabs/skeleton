@@ -1,13 +1,18 @@
 # uhifadhi/skeleton
 
-The project template every uhifadhi installation starts from: a bare Symfony
-application carrying the uhifadhi core. `composer create-project` copies it once
-and then it is yours — every capability after that arrives as a module,
+The open-source observatory for nature conservation and protected areas.
+
+This repository is the starter every installation is created from: a bare
+Symfony application carrying the uhifadhi core. `composer create-project` copies
+it once and then it is yours — every capability after that arrives as a module,
 installed with composer.
 
 ## Contents
 
+- [What uhifadhi is](#what-uhifadhi-is)
+- [The tree](#the-tree)
 - [What the core is](#what-the-core-is)
+- [Spatial data and deployment](#spatial-data-and-deployment)
 - [Install guide](#install-guide)
   - [1. Create the project](#1-create-the-project)
   - [2. Give it a database](#2-give-it-a-database)
@@ -20,6 +25,54 @@ installed with composer.
 - [Why the core is required at `@dev`](#why-the-core-is-required-at-dev)
 - [Learn more](#learn-more)
 - [Licence](#licence)
+
+## What uhifadhi is
+
+An installation of uhifadhi is one organisation's own observatory over the
+protected areas it manages. Each area is a real place in the database: a
+gazetted boundary drawn on the map, the zones inside it, and the record of what
+happens there. Around the areas stands the organisation itself — its people,
+the positions they hold, and the permissions each position carries. On top of
+that come the capabilities the organisation actually runs — patrols, incidents,
+rosters — and each of those arrives as a **module** that an administrator
+installs and then switches on for the areas that want it. An area that runs no
+patrols never sees the patrol screens.
+
+The whole platform is one sentence:
+
+> **A module registers with the registry and renders in the shell.**
+
+The registry is where a module declares itself — its screens, its place in the
+catalogue, the permissions it wants an administrator to be able to grant. The
+shell is the frame every screen is drawn in: the document, the navigation, the
+theme. Everything a deployment can *do* arrives as a module on top of those two,
+and the shell never learns any module's name — it renders what the registry
+tells it is installed.
+
+A fresh installation is empty, and honestly so. There are no demo areas, no
+sample team and no pre-installed capabilities: an organisation creates its own
+areas, invites its own people and installs the modules it needs. The install
+guide below is the ordered path from nothing to that first signed-in screen.
+
+## The tree
+
+Uhifadhi is structured like the thing it protects.
+
+**The seed** is this starter, `uhifadhi/skeleton`: planted once by
+`composer create-project`, so boring it never changes. **The core** —
+[`uhifadhi/uhifadhi`](https://github.com/uhifadhilabs/uhifadhi) — is updated
+forever through composer, and it holds the registry every module registers with,
+the shell you see, the team, the areas and the atlas every map and chart is
+drawn with. **The branches** are the modules, `uhifadhi/<name>-module`, one per
+capability. **The contracts**
+([`src/Uhifadhi/Contracts/docs`](https://github.com/uhifadhilabs/uhifadhi/tree/main/src/Uhifadhi/Contracts/docs))
+are the interfaces every branch carries without carrying the core: a module can
+depend on them alone, and they are MIT, because an interface anybody may
+implement should cost nobody anything.
+
+**The tree is a picture, not a naming scheme.** It is the fastest way to explain
+the shape and it lives in prose only — the packages are named for what they do,
+so an import says what it is without the metaphor.
 
 ## What the core is
 
@@ -40,6 +93,19 @@ of them runs alone:
 
 Which is why an installer document says "the core" and "modules", and "bundle"
 is a word for developers.
+
+## Spatial data and deployment
+
+Spatial data lives in **PostGIS**, through
+[`fundistadi/postgis-bundle`](https://github.com/fundistadi/postgis-bundle),
+which the core brings with it. Geometry columns are typed —
+`geometry(MultiPolygon,4326)` for a gazetted boundary, `point`, `linestring` —
+and they get their GiST indexes straight from `doctrine:migrations:diff`. There
+is no hand-written DDL anywhere in an installation.
+
+Deployment is a standard Symfony application. This repository ships a production
+`Dockerfile` (FrankenPHP): build the image and run it wherever you host
+containers, next to any PostGIS database.
 
 ---
 
