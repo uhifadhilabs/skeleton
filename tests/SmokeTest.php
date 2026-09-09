@@ -13,16 +13,47 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Routing\RouterInterface;
+use Uhifadhi\Bundle\AreaBundle\AreaBundle;
+use Uhifadhi\Bundle\AtlasBundle\AtlasBundle;
+use Uhifadhi\Bundle\RegistryBundle\RegistryBundle;
+use Uhifadhi\Bundle\ShellBundle\ShellBundle;
+use Uhifadhi\Bundle\TeamBundle\TeamBundle;
 
 /**
- * The whole of the skeleton's test suite: a fresh installation boots and
- * answers. Everything beyond this arrives as a module bundle and is tested there.
+ * A fresh installation boots, has the core on it, and can address the screens
+ * the core draws. Everything past this arrives as a module and is tested there.
  */
-final class SmokeTest extends WebTestCase
+final class SmokeTest extends KernelTestCase
 {
+    /**
+     * @return iterable<string, array{class-string}>
+     */
+    public static function coreBundles(): iterable
+    {
+        yield 'the registry' => [RegistryBundle::class];
+        yield 'the shell' => [ShellBundle::class];
+        yield 'the atlas' => [AtlasBundle::class];
+        yield 'the team' => [TeamBundle::class];
+        yield 'the areas' => [AreaBundle::class];
+    }
+
+    /**
+     * The addresses config/routes/ mounts. `debug:router` is where somebody
+     * looks for these, so the router is what is asked.
+     *
+     * @return iterable<string, array{string, string}>
+     */
+    public static function mountedRoutes(): iterable
+    {
+        yield 'the welcome page' => ['welcome', '/'];
+        yield 'the sign-in screen' => ['team_login', '/login'];
+        yield 'the area register' => ['area_index', '/areas'];
+        yield 'an area\'s module grid' => ['seam_area_modules', '/areas/{uuid}/modules'];
+    }
+
     public function testTheKernelBoots(): void
     {
         $kernel = self::bootKernel();
@@ -32,64 +63,29 @@ final class SmokeTest extends WebTestCase
     }
 
     /**
-     * `/` ANSWERS 200 WITH THE WELCOME PAGE, and that is the skeleton's
-     * contract. Without it `/` is an honest 404 — the skeleton ships no
-     * controllers, so in debug Symfony renders its own welcome-404, which would
-     * be the first thing anybody saw after `composer create-project`: a correct
-     * installation looking like a broken one.
+     * The container compiles with the whole core on it. Asked bundle by bundle,
+     * so a line missing from config/bundles.php fails here and names itself
+     * rather than surfacing as a blank page.
      *
-     * The route, the controller behind it and the page are all the shell's. What
-     * is the skeleton's is the ONE LINE in `config/routes/shell.yaml` that
-     * imports them. That line is why this answers, and editing or deleting it is
-     * how an installation takes `/` back.
-     *
-     * The body is asserted because it is not a framework internal: it is a page
-     * this platform ships. As strings rather than through a crawler — the
-     * skeleton carries no css-selector and does not need one to know it served
-     * the right page.
+     * @param class-string $class
      */
-    public function testTheHomepageAnswersWithTheWelcomePage(): void
+    #[DataProvider('coreBundles')]
+    public function testTheCoreIsInstalled(string $class): void
     {
-        $client = self::createClient();
-        $client->request('GET', '/');
+        $bundles = self::bootKernel()->getBundles();
 
-        self::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-
-        $html = (string) $client->getResponse()->getContent();
-
-        self::assertStringContainsString('<div class="page">', $html, 'It renders inside the shell\'s page frame.');
-        self::assertStringContainsString('uhifadhi/seam-module', $html);
-        self::assertStringContainsString('uhifadhi/shell-module', $html);
+        self::assertArrayHasKey((new \ReflectionClass($class))->getShortName(), $bundles);
     }
 
-    /**
-     * AND IT ANSWERS BY CONSENT, NOT BY ACCIDENT. The skeleton defines no route
-     * of its own: it imports the shell's resource, and the shell's route is
-     * named `welcome`. Both halves are asserted because both are what an
-     * installation is told — the name is what `debug:router` shows somebody who
-     * is about to replace the homepage, and the import is the one line they edit
-     * to do it.
-     */
-    public function testTheHomepageIsImportedFromTheShellRatherThanDefinedHere(): void
+    #[DataProvider('mountedRoutes')]
+    public function testTheCoreScreensAreMounted(string $name, string $path): void
     {
         self::bootKernel();
         $router = self::getContainer()->get('router');
         self::assertInstanceOf(RouterInterface::class, $router);
 
-        $welcome = $router->getRouteCollection()->get('welcome');
-        self::assertNotNull($welcome, 'The imported resource defines the welcome route.');
-        self::assertSame('/', $welcome->getPath());
-
-        $routes = (string) file_get_contents(\dirname(__DIR__).'/config/routes/shell.yaml');
-        self::assertStringContainsString(
-            "resource: '@UhifadhiShellBundle/config/routes/welcome.php'",
-            $routes,
-            'The skeleton imports the shell\'s route resource.',
-        );
-        self::assertStringNotContainsString(
-            'controller:',
-            $routes,
-            'The skeleton defines no route of its own; it consents to the shell\'s.',
-        );
+        $route = $router->getRouteCollection()->get($name);
+        self::assertNotNull($route, $name.' is mounted.');
+        self::assertSame($path, $route->getPath());
     }
 }

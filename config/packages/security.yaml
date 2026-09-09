@@ -1,0 +1,132 @@
+# THE INSTALLATION'S ONE RULE: everything is behind sign-in, and the few
+# addresses a stranger has to reach are named below. That is the whole of what
+# this file decides.
+#
+# WHAT IT DELIBERATELY DOES NOT CONTAIN is a rule per module. What a signed-in
+# person may DO — record a patrol, close an incident, edit an area — is the
+# module's own question, asked in the module's own controller against the
+# permissions that module declared. A path rule here could not express it
+# anyway: permissions are per action, per object and per area, and this file
+# knows only URLs. A module that adds a rule here is a module that has taken a
+# decision away from the person administering this installation.
+#
+# Reference: https://symfony.com/doc/current/security.html
+security:
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    # The accounts this installation has, looked up by email. The entity is the
+    # team's; naming it here is what makes it this installation's user.
+    providers:
+        team_user_provider:
+            entity:
+                class: Uhifadhi\Bundle\TeamBundle\Entity\User
+                property: email
+
+    firewalls:
+        # The development toolbar and the compiled assets. No firewall, because
+        # asking a profiler page for credentials is how a debugging session ends.
+        dev:
+            pattern: ^/(_profiler|_wdt|assets|build)/
+            security: false
+
+        # Where a field client signs in, firewall-free on purpose: a handset
+        # whose token has expired still holds it and still sends it, and that
+        # stale header must never be what stops somebody signing in again. The
+        # endpoint checks the credentials itself.
+        api_auth:
+            pattern: ^/api/auth/token$
+            security: false
+
+        # The machine door: bearer tokens, no session, no form, no remembering.
+        # Stateless is not an optimisation — a client syncs in bursts of hundreds
+        # after hours offline, and a session per burst would be a lie about a
+        # conversation that is not happening.
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: team_user_provider
+            # A deactivated account is refused at the machine door as well as at
+            # the form; a token outliving the person's standing would not be.
+            user_checker: team.user_checker
+            custom_authenticators:
+                - Uhifadhi\Bundle\RegistryBundle\Security\ApiTokenAuthenticator
+            # Makes "no token at all" a 401 rather than a redirect to a form no
+            # client can fill in. The two mean different things to a client, so
+            # the difference has to be real.
+            entry_point: Uhifadhi\Bundle\RegistryBundle\Security\ApiTokenAuthenticator
+
+        main:
+            lazy: true
+            provider: team_user_provider
+            # A deactivated account is refused at the door, with a reason.
+            user_checker: team.user_checker
+
+            form_login:
+                login_path: team_login
+                check_path: team_login
+                enable_csrf: true
+                default_target_path: /
+
+            logout:
+                path: team_logout
+                target: team_login
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # one week
+                always_remember_me: false
+
+            # Impersonation, guarded by ROLE_ALLOWED_TO_SWITCH below — which
+            # only the highest tier holds.
+            switch_user: true
+
+    # THE TIER LADDER, AND ONLY IT. A tier is a coarse standing this
+    # installation's own rules may name. The granular permissions a position
+    # grants are decided by a voter, never by a role, which is why no module
+    # appears here and none ever will.
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    # DEFAULT-CLOSED, AND ONLY THE FIRST MATCHING RULE APPLIES. The addresses a
+    # stranger has to reach are named; the catch-all shuts everything else,
+    # including every route a module adds tomorrow. That is why installing a
+    # module never means editing this list.
+    #
+    # THE LIST CANNOT BE SPLIT. Symfony refuses a second `access_control:`
+    # anywhere — a `when@dev:` block adding one rule fails at compile time with
+    # "cannot be overwritten. You have to define all options for this path […]
+    # in one configuration section". So every rule this installation will ever
+    # have is here, in order, and a rule that should only apply in development
+    # is a rule whose ADDRESS has to stop existing in production.
+    access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/reset-password, roles: PUBLIC_ACCESS }
+        - { path: ^/invite/, roles: PUBLIC_ACCESS }
+        - { path: ^/api/auth/token$, roles: PUBLIC_ACCESS }
+
+        # AN OPENAPI DOCUMENT, IF A MODULE EVER MOUNTS ONE. Nothing in the core
+        # answers these three addresses, which is why they are commented out
+        # rather than shipped open. Uncomment them together with the module that
+        # serves the document, and configure that module to serve it in
+        # development only — these lines cannot make that distinction for you.
+        #- { path: '^/api/docs', roles: PUBLIC_ACCESS }
+        #- { path: '^/api/\.well-known', roles: PUBLIC_ACCESS }
+        #- { path: '^/api$', roles: PUBLIC_ACCESS }
+
+        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/, roles: ROLE_USER }
+
+when@test:
+    security:
+        password_hashers:
+            # Password hashers are resource-intensive by design. In tests it is
+            # safe to reduce their cost, and the suite is otherwise dominated by
+            # hashing.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # lowest possible for bcrypt
+                time_cost: 3 # lowest possible for argon
+                memory_cost: 10 # lowest possible for argon
