@@ -21,6 +21,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/uhifadhilabs/uhifadhi"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/uhifadhilabs/devkit-module"
         }
     ],
     "require": {

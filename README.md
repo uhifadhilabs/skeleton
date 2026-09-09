@@ -195,11 +195,25 @@ has no account to get through it. This step is how the first administrator comes
 to exist, and it runs **after** the migrations, because it writes to the table
 they just created.
 
-> **TODO — there is no command for this yet.** The core ships no console
-> commands at all; every command the platform has belongs to the
-> development-only `devkit` package, and the first-administrator command has not
-> landed there. Until it does, the first account has to be inserted by hand.
-> This step will be replaced by the real invocation.
+The command belongs to devkit, the development-only package that assembles every
+command the platform offers. Requiring it as a dev dependency is what makes the
+command exist; a production build never has it, and never has the command.
+
+```bash
+composer require --dev "uhifadhi/devkit-module:^0.1@dev"
+php bin/console team:user:create you@example.org Ada Mwangi --tier=super-admin
+```
+
+Leave `--password=` off and the passphrase is read from standard input, so it
+need never reach a shell history or a process list:
+
+```bash
+printf '%s' "$PASSPHRASE" | php bin/console team:user:create you@example.org Ada Mwangi
+```
+
+The tier defaults to `super-admin`, which is what this account is for: the first
+administrator of an installation with nobody else in it. `--tier=admin` and
+`--tier=staff` make lesser accounts once somebody can sign in.
 
 ## 5. Serve it
 
@@ -275,6 +289,12 @@ shell's three frames and fills one block:
 rather than a plain version from a registry, and both halves have the same
 one-sentence reason: until the core is tagged 1.0.0 it lives on a branch in a
 private repository, and `create-project` needs `--stability=dev` to accept it.
+
+Devkit is untagged for the same reason, which is why step 4 spells its stability
+out too. Composer reads `repositories` only from the root package and never from
+a dependency, so this file carries the `vcs` entry for devkit as well as the one
+for the core — and both entries come out once the packages are published to
+Packagist.
 
 ## Learn more
 
