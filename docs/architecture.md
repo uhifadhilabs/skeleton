@@ -86,22 +86,25 @@ question in its own controller against the permissions it declared.
 
 ## Enabling the core's Stimulus controllers
 
-The core ships its front-end behaviour as Stimulus controllers under three
-AssetMapper namespaces: `@uhifadhi/shell-bundle`, `@uhifadhi/team-bundle` and
-`@uhifadhi/area-bundle`. What enables them here is one re-export file per
-controller in `assets/controllers/`, named so that the identifier StimulusBundle
-derives is the one the core's own markup asks for
-(`uhifadhi--shell-bundle--theme` and its siblings).
+The core ships its front-end behaviour as Stimulus controllers, and
+`assets/controllers.json` is what switches them on — under **one** key, the
+package's own:
 
-`assets/controllers.json` cannot do it. That file keys controllers by an
-**installed** composer package and resolves the key to that package's directory
-on disk. The core is one package holding five bundles, so `@uhifadhi/shell-bundle`
-names something Composer knows about — the core declares it — and nothing that
-exists as a directory. `asset-map:compile` stops with "Could not find package
-"uhifadhi/shell-bundle" referred to from controllers.json".
+```json
+"@uhifadhi/uhifadhi": {
+    "theme": { "enabled": true, "fetch": "eager" }
+}
+```
 
-The files are the installation's. Delete one and that control goes inert: the
-markup stays correct and simply has no behaviour behind it.
+That key is the only one that resolves. StimulusBundle strips the `@`, asks
+Composer where `uhifadhi/uhifadhi` is installed and reads the `assets/package.json`
+underneath it; the five bundle names the core `replace`s have no install path of
+their own. The identifiers stay the bundles' either way — the manifest declares
+each controller's `name`, so the markup asks for `uhifadhi--shell-bundle--theme`
+whichever manifest answered.
+
+The list is the installation's. Set one to `"enabled": false` and that control
+goes inert: the markup stays correct and simply has no behaviour behind it.
 
 ## Where a module fits
 
