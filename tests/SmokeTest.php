@@ -54,7 +54,7 @@ final class SmokeTest extends KernelTestCase
         // The name is the core's, and the assertion is on the address as much
         // as on the name: this is where an administrator switches a module on
         // for one area.
-        yield 'an area\'s module grid' => ['seam_area_modules', '/areas/{uuid}/modules'];
+        yield 'an area\'s module grid' => ['area_modules', '/areas/{uuid}/modules'];
     }
 
     public function testTheKernelBoots(): void

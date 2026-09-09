@@ -3642,6 +3642,77 @@
             "time": "2026-08-22T09:06:25+00:00"
         },
         {
+            "name": "symfony/options-resolver",
+            "version": "v8.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/options-resolver.git",
+                "reference": "88f9c561f678a02d54b897014049fa839e33ff82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/88f9c561f678a02d54b897014049fa839e33ff82",
+                "reference": "88f9c561f678a02d54b897014049fa839e33ff82",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1",
+                "symfony/deprecation-contracts": "^2.5|^3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\OptionsResolver\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides an improved replacement for the array_replace PHP function",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "config",
+                "configuration",
+                "options"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/options-resolver/tree/v8.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-05-29T05:06:50+00:00"
+        },
+        {
             "name": "symfony/password-hasher",
             "version": "v8.1.0",
             "source": {
@@ -4549,6 +4620,80 @@
                 }
             ],
             "time": "2026-08-30T08:48:43+00:00"
+        },
+        {
+            "name": "symfony/rate-limiter",
+            "version": "v8.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/rate-limiter.git",
+                "reference": "dee2fc983ca9944ac37af105a4940507ff5fc42c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/rate-limiter/zipball/dee2fc983ca9944ac37af105a4940507ff5fc42c",
+                "reference": "dee2fc983ca9944ac37af105a4940507ff5fc42c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1",
+                "symfony/options-resolver": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "psr/cache": "^1.0|^2.0|^3.0",
+                "symfony/lock": "^7.4|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\RateLimiter\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wouter de Jong",
+                    "email": "wouter@wouterj.nl"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides a Token Bucket implementation to rate limit input and output in your application",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "limiter",
+                "rate-limiter"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/rate-limiter/tree/v8.1.6"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-08-07T15:35:35+00:00"
         },
         {
             "name": "symfony/routing",
@@ -6407,13 +6552,13 @@
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "git@github.com:uhifadhilabs/uhifadhi.git",
-                "reference": "1385e5223b4b5ced7816cafd4a1922df0bfe3096"
+                "url": "https://github.com/uhifadhilabs/uhifadhi.git",
+                "reference": "9025350feddc3f2e85c960b0c0e7ec2678eae138"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/1385e5223b4b5ced7816cafd4a1922df0bfe3096",
-                "reference": "1385e5223b4b5ced7816cafd4a1922df0bfe3096",
+                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/9025350feddc3f2e85c960b0c0e7ec2678eae138",
+                "reference": "9025350feddc3f2e85c960b0c0e7ec2678eae138",
                 "shasum": ""
             },
             "require": {
@@ -6436,6 +6581,7 @@
                 "symfony/mailer": "^7.3 || ^8.0",
                 "symfony/mime": "^7.3 || ^8.0",
                 "symfony/password-hasher": "^7.3 || ^8.0",
+                "symfony/rate-limiter": "^7.3 || ^8.0",
                 "symfony/routing": "^7.3 || ^8.0",
                 "symfony/security-bundle": "^7.3 || ^8.0",
                 "symfony/security-core": "^7.3 || ^8.0",
@@ -6452,18 +6598,11 @@
             },
             "replace": {
                 "uhifadhi/area-bundle": "self.version",
-                "uhifadhi/area-module": "self.version",
                 "uhifadhi/atlas-bundle": "self.version",
                 "uhifadhi/contracts": "self.version",
-                "uhifadhi/map-module": "self.version",
-                "uhifadhi/module-contracts": "self.version",
                 "uhifadhi/registry-bundle": "self.version",
-                "uhifadhi/seam-module": "self.version",
                 "uhifadhi/shell-bundle": "self.version",
-                "uhifadhi/shell-module": "self.version",
-                "uhifadhi/team-bundle": "self.version",
-                "uhifadhi/team-module": "self.version",
-                "uhifadhi/widget-module": "self.version"
+                "uhifadhi/team-bundle": "self.version"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.95",
@@ -6548,7 +6687,7 @@
                 "source": "https://github.com/uhifadhilabs/uhifadhi/tree/main",
                 "issues": "https://github.com/uhifadhilabs/uhifadhi/issues"
             },
-            "time": "2026-09-09T01:20:59+00:00"
+            "time": "2026-09-09T04:26:05+00:00"
         }
     ],
     "packages-dev": [
@@ -9574,77 +9713,6 @@
                 }
             ],
             "time": "2026-08-21T17:47:34+00:00"
-        },
-        {
-            "name": "symfony/options-resolver",
-            "version": "v8.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "88f9c561f678a02d54b897014049fa839e33ff82"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/88f9c561f678a02d54b897014049fa839e33ff82",
-                "reference": "88f9c561f678a02d54b897014049fa839e33ff82",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.4.1",
-                "symfony/deprecation-contracts": "^2.5|^3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\OptionsResolver\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides an improved replacement for the array_replace PHP function",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "config",
-                "configuration",
-                "options"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v8.1.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nicolas-grekas",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-05-29T05:06:50+00:00"
         },
         {
             "name": "symfony/process",

@@ -16,7 +16,7 @@ namespace App\Tests;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\SecurityBundle\Security\FirewallContext;
 use Symfony\Component\HttpFoundation\Response;
-use Uhifadhi\Bundle\RegistryBundle\Security\ApiTokenAuthenticator;
+use Uhifadhi\Bundle\TeamBundle\Security\ApiTokenAuthenticator;
 
 /**
  * THE ONE RULE, exercised over HTTP: everything is behind sign-in, the few
@@ -102,5 +102,21 @@ final class SecurityTest extends WebTestCase
         self::assertNotNull($config);
         self::assertTrue($config->isStateless());
         self::assertSame(ApiTokenAuthenticator::class, $config->getEntryPoint());
+    }
+
+    /**
+     * The authenticator this file names is the TEAM's, and it is reachable —
+     * a firewall naming a service id nothing registers is a container that does
+     * not compile, so this fails loudly rather than at the first request.
+     */
+    public function testTheMachineDoorsAuthenticatorIsTheTeamsAndIsRegistered(): void
+    {
+        self::bootKernel();
+
+        self::assertTrue(self::getContainer()->has(ApiTokenAuthenticator::class));
+        self::assertInstanceOf(
+            ApiTokenAuthenticator::class,
+            self::getContainer()->get(ApiTokenAuthenticator::class),
+        );
     }
 }

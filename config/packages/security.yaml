@@ -51,11 +51,11 @@ security:
             # the form; a token outliving the person's standing would not be.
             user_checker: team.user_checker
             custom_authenticators:
-                - Uhifadhi\Bundle\RegistryBundle\Security\ApiTokenAuthenticator
+                - Uhifadhi\Bundle\TeamBundle\Security\ApiTokenAuthenticator
             # Makes "no token at all" a 401 rather than a redirect to a form no
             # client can fill in. The two mean different things to a client, so
             # the difference has to be real.
-            entry_point: Uhifadhi\Bundle\RegistryBundle\Security\ApiTokenAuthenticator
+            entry_point: Uhifadhi\Bundle\TeamBundle\Security\ApiTokenAuthenticator
 
         main:
             lazy: true
