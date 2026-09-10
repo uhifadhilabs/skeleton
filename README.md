@@ -116,8 +116,16 @@ the order is the point.
 
 ## 1. Create the project
 
+Until the packages are tagged and listed on Packagist, both flags are required:
+`--repository` because there is no Packagist listing to resolve
+`uhifadhi/skeleton` from, and `--stability=dev` because the only version that
+exists is the `main` branch, which the default minimum stability of `stable`
+does not match.
+
 ```bash
-composer create-project uhifadhi/skeleton park
+composer create-project uhifadhi/skeleton park \
+  --stability=dev \
+  --repository='{"type":"vcs","url":"https://github.com/uhifadhilabs/skeleton"}'
 cd park
 ```
 
@@ -128,6 +136,10 @@ That installs the core and wires it up: `config/bundles.php` already names every
 bundle, `config/packages/` carries one commented file per core bundle plus
 `security.yaml`, and `config/routes/` mounts the screens. There is nothing to
 paste and no firewall to turn on. What there is not yet is a database.
+
+The project this creates carries its own `composer.json` with the `vcs` entries
+for the core and for devkit already in it, so a `composer require` run inside
+the project — step 4 and step 6 included — needs no flags of its own.
 
 ## 2. Give it a database
 
