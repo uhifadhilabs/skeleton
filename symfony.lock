@@ -241,5 +241,24 @@
         "files": [
             "config/packages/ux_map.yaml"
         ]
+    },
+    "uhifadhi/uhifadhi": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/uhifadhilabs/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "53aedacc6bd1c9b4b58f1df80ec6f1f657cd8143"
+        },
+        "files": [
+            "config/packages/area.yaml",
+            "config/packages/atlas.yaml",
+            "config/packages/registry.yaml",
+            "config/packages/shell.yaml",
+            "config/packages/team.yaml",
+            "config/routes/area.yaml",
+            "config/routes/shell.yaml",
+            "config/routes/team.yaml"
+        ]
     }
 }
