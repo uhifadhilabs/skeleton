@@ -139,7 +139,9 @@ paste and no firewall to turn on. What there is not yet is a database.
 
 The project this creates carries its own `composer.json` with the `vcs` entries
 for the core and for devkit already in it, so a `composer require` run inside
-the project — step 4 and step 6 included — needs no flags of its own.
+the project — step 4 and step 6 included — needs no flags of its own. Why those
+requirements are pinned at `@dev` is
+[below](#why-the-core-is-required-at-dev).
 
 ## 2. Give it a database
 
@@ -297,16 +299,18 @@ shell's three frames and fills one block:
 
 ## Why the core is required at `@dev`
 
-`composer.json` requires `uhifadhi/uhifadhi: ^1.0@dev` from a `vcs` repository
-rather than a plain version from a registry, and both halves have the same
-one-sentence reason: until the core is tagged 1.0.0 it lives on a branch in a
-private repository, and `create-project` needs `--stability=dev` to accept it.
+`composer.json` requires `uhifadhi/uhifadhi: ^1.0@dev` rather than a plain
+version constraint, because the core carries no tagged release: the only version
+that resolves is its `main` branch, and `@dev` is what accepts one. Devkit is
+untagged on the same terms, which is why step 4 spells its stability out too.
+Both repositories are public — the constraint is about tags, not access.
 
-Devkit is untagged for the same reason, which is why step 4 spells its stability
-out too. Composer reads `repositories` only from the root package and never from
-a dependency, so this file carries the `vcs` entry for devkit as well as the one
-for the core — and both entries come out once the packages are published to
-Packagist.
+The `vcs` entries beside that requirement are there because Composer reads
+`repositories` only from the root package and never from a dependency, so this
+file names the core's repository and devkit's itself. Once the packages are
+tagged and listed on Packagist, the `@dev` constraints and the `vcs` entries
+all come out; until then [step 1](#1-create-the-project) carries the flags
+`create-project` needs.
 
 ## Learn more
 
