@@ -6553,12 +6553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/uhifadhilabs/uhifadhi.git",
-                "reference": "cd41b1c0a7f9d80aaf1567d0f9b7cabb6a511ddd"
+                "reference": "df29e1e9c4ea8f494c2be79ebabc6524ff639679"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/cd41b1c0a7f9d80aaf1567d0f9b7cabb6a511ddd",
-                "reference": "cd41b1c0a7f9d80aaf1567d0f9b7cabb6a511ddd",
+                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/df29e1e9c4ea8f494c2be79ebabc6524ff639679",
+                "reference": "df29e1e9c4ea8f494c2be79ebabc6524ff639679",
                 "shasum": ""
             },
             "require": {
@@ -6694,7 +6694,7 @@
                 "source": "https://github.com/uhifadhilabs/uhifadhi/tree/main",
                 "issues": "https://github.com/uhifadhilabs/uhifadhi/issues"
             },
-            "time": "2026-09-10T09:33:17+00:00"
+            "time": "2026-09-10T10:33:08+00:00"
         }
     ],
     "packages-dev": [
