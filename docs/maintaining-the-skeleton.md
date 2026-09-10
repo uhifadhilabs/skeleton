@@ -36,6 +36,16 @@ replaces.
 The core is one package and one version, so there is no combination of bundle
 versions to reason about: the five move together or not at all.
 
+`doctrine:migrations:diff` stays the installation's command for the
+installation's own entities, and the namespace
+`config/packages/doctrine_migrations.yaml` maps —
+`'DoctrineMigrations': '%kernel.project_dir%/migrations'` — is where a flagless
+`diff` writes. That is not the library's own fallback, which is the first
+configured namespace and would be a core bundle's directory under `vendor/`; the
+core moves the directory no installed bundle ships to the front. So the mapping
+in that file is load-bearing, and an installation that deletes it has a `diff`
+that writes into a package again.
+
 ## The version rhythm
 
 **The core's minor is the starter's minor.** When the core takes a minor, the

@@ -196,6 +196,20 @@ php bin/console asset-map:compile
 written an entity is how you confirm that: it says
 `No changes detected in your mapping information.`
 
+Run it with no flag. Each core bundle registers a migrations namespace of its
+own, and `diff` with no `--namespace` writes into the *first* one configured —
+which, left alone, would be a bundle's directory under `vendor/`, where the next
+`composer update` deletes the file and the row in `doctrine_migration_versions`
+outlives it. The core puts the directory no installed bundle ships in front, so
+the namespace `config/packages/doctrine_migrations.yaml` maps here —
+`'DoctrineMigrations': '%kernel.project_dir%/migrations'` — is what a flagless
+`diff` falls back to. Keep that mapping: it is the line that makes `migrations/`
+yours. If you add a second namespace of your own, name the one you mean:
+
+```bash
+php bin/console doctrine:migrations:diff --namespace=DoctrineMigrations
+```
+
 The first version the core runs is `CREATE EXTENSION IF NOT EXISTS postgis`, so
 step 2's `CREATE EXTENSION` by hand is no longer something you do — unless your
 database refuses it. PostGIS is not a trusted extension, so enabling it wants a
