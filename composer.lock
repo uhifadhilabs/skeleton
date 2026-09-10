@@ -6553,12 +6553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/uhifadhilabs/uhifadhi.git",
-                "reference": "aaa3802b9d68e2aabdce4a50103322b06ed74cee"
+                "reference": "9ab31ebe22e01d88bacd71273dbc5599c8d491ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/aaa3802b9d68e2aabdce4a50103322b06ed74cee",
-                "reference": "aaa3802b9d68e2aabdce4a50103322b06ed74cee",
+                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/9ab31ebe22e01d88bacd71273dbc5599c8d491ca",
+                "reference": "9ab31ebe22e01d88bacd71273dbc5599c8d491ca",
                 "shasum": ""
             },
             "require": {
@@ -6566,6 +6566,7 @@
                 "doctrine/dbal": "^4.0",
                 "doctrine/doctrine-bundle": "^3.0",
                 "doctrine/doctrine-migrations-bundle": "^4.0",
+                "doctrine/migrations": "^3.9",
                 "doctrine/orm": "^3.5",
                 "fundistadi/postgis-bundle": "^0.5.1",
                 "php": ">=8.4",
@@ -6623,6 +6624,10 @@
             "autoload": {
                 "psr-4": {
                     "Uhifadhi\\Bundle\\": "src/Uhifadhi/Bundle/",
+                    "Uhifadhi\\Bundle\\AreaBundle\\Migrations\\": "src/Uhifadhi/Bundle/AreaBundle/migrations/",
+                    "Uhifadhi\\Bundle\\RegistryBundle\\Migrations\\": "src/Uhifadhi/Bundle/RegistryBundle/migrations/",
+                    "Uhifadhi\\Bundle\\ShellBundle\\Migrations\\": "src/Uhifadhi/Bundle/ShellBundle/migrations/",
+                    "Uhifadhi\\Bundle\\TeamBundle\\Migrations\\": "src/Uhifadhi/Bundle/TeamBundle/migrations/",
                     "Uhifadhi\\Contracts\\": "src/Uhifadhi/Contracts/"
                 },
                 "exclude-from-classmap": [
@@ -6638,6 +6643,7 @@
                     "Uhifadhi\\Bundle\\TeamBundle\\Tests\\": "src/Uhifadhi/Bundle/TeamBundle/tests/",
                     "Uhifadhi\\Contracts\\Tests\\": "src/Uhifadhi/Contracts/tests/",
                     "Uhifadhi\\Core\\Tests\\": "tests/",
+                    "Uhifadhi\\Core\\Tests\\Core\\Fixtures\\Migrations\\": "tests/Core/Fixtures/migrations/",
                     "Uhifadhi\\Entity\\": "src/Uhifadhi/Bundle/RegistryBundle/tests/Integration/Fixtures/Uhifadhi/Entity/"
                 }
             },
@@ -6688,7 +6694,7 @@
                 "source": "https://github.com/uhifadhilabs/uhifadhi/tree/main",
                 "issues": "https://github.com/uhifadhilabs/uhifadhi/issues"
             },
-            "time": "2026-09-10T02:53:05+00:00"
+            "time": "2026-09-10T03:10:34+00:00"
         }
     ],
     "packages-dev": [
