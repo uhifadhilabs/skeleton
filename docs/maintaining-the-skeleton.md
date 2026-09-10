@@ -23,12 +23,15 @@ repository at all:
 
 ```bash
 composer update uhifadhi/uhifadhi
-php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate --dry-run   # read what will run
 php bin/console doctrine:migrations:migrate
-php bin/console doctrine:migrations:diff       # must say "No changes"
 php bin/console cache:clear
 php bin/console asset-map:compile
 ```
+
+The core carries its own versions, so an update brings the ones it added and
+`migrate` runs them. Back the database up first: that is the step nothing here
+replaces.
 
 The core is one package and one version, so there is no combination of bundle
 versions to reason about: the five move together or not at all.

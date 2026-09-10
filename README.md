@@ -100,8 +100,9 @@ Spatial data lives in **PostGIS**, through
 [`fundistadi/postgis-bundle`](https://github.com/fundistadi/postgis-bundle),
 which the core brings with it. Geometry columns are typed —
 `geometry(MultiPolygon,4326)` for a gazetted boundary, `point`, `linestring` —
-and they get their GiST indexes straight from `doctrine:migrations:diff`. There
-is no hand-written DDL anywhere in an installation.
+and they get their GiST indexes from the mapping. The core ships the migrations
+that create its own tables, so there is no hand-written DDL anywhere in an
+installation and nothing to generate before the first one runs.
 
 Deployment is a standard Symfony application. This repository ships a production
 `Dockerfile` (FrankenPHP): build the image and run it wherever you host
@@ -174,27 +175,32 @@ serves the application over SSL at `https://park.localhost`. You write nothing
 into `.env`.
 
 To use a database of your own instead, set `DATABASE_URL` in `.env.local`
-yourself and make sure `CREATE EXTENSION postgis` has been run in it.
+yourself. You do not need to run `CREATE EXTENSION postgis` in it — the core's
+first migration does, in step 3 — unless the database will not grant it; see
+that step.
 
 ## 3. Run the migrations
 
-The core ships entities, not migration versions: the tables are the core's, the
-migration history is **yours**. So you generate the migration, once, against the
-schema the installed core describes.
-
-The pattern is **diff → migrate → diff again**, and the second diff **must say
-"No changes."** The first writes a migration for everything the core adds;
-migrate applies it; the second proves the schema now matches the mapping
-exactly. Churn on that second diff is a bug in the core, not something to route
-around.
+The core ships the versions that create its own tables, so there is nothing to
+generate: you run them.
 
 ```bash
-php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:migrate
-php bin/console doctrine:migrations:diff
 php bin/console cache:clear
 php bin/console asset-map:compile
 ```
+
+`migrations/` in this project stays **yours** — it is where
+`doctrine:migrations:diff` writes the versions for entities you write in
+`src/Entity/`. A fresh installation has none, and running `diff` before you have
+written an entity is how you confirm that: it says
+`No changes detected in your mapping information.`
+
+The first version the core runs is `CREATE EXTENSION IF NOT EXISTS postgis`, so
+step 2's `CREATE EXTENSION` by hand is no longer something you do — unless your
+database refuses it. PostGIS is not a trusted extension, so enabling it wants a
+superuser; a hosted database that withholds that has PostGIS turned on by the
+provider, and the core's first version then runs and does nothing.
 
 `asset-map:compile` is not optional: the compiled asset manifest is stale until
 you rebuild it, and stylesheets and scripts serve the old bytes until you do.
@@ -241,14 +247,13 @@ for a quick look.
 
 ## 6. Add modules
 
-A module is one `composer require` and then the migration steps from section 3
-again, because a module adds its own tables and its own assets:
+A module is one `composer require` and then the steps from section 3 again,
+because a module adds its own tables and its own assets — and, like the core,
+ships the versions that create them:
 
 ```bash
 composer require uhifadhi/patrol-module
-php bin/console doctrine:migrations:diff
 php bin/console doctrine:migrations:migrate
-php bin/console doctrine:migrations:diff       # must say "No changes"
 php bin/console cache:clear
 php bin/console asset-map:compile
 ```
