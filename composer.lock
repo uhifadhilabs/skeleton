@@ -6134,6 +6134,81 @@
             "time": "2026-07-29T16:44:14+00:00"
         },
         {
+            "name": "symfony/ux-leaflet-map",
+            "version": "v3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ux-leaflet-map.git",
+                "reference": "918d1fd2ad163ce0453c8d1c7007ceea852c698c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ux-leaflet-map/zipball/918d1fd2ad163ce0453c8d1c7007ceea852c698c",
+                "reference": "918d1fd2ad163ce0453c8d1c7007ceea852c698c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4",
+                "symfony/stimulus-bundle": "^2.18.1|^3.0",
+                "symfony/ux-map": "^2.19|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.1|^12.0",
+                "spatie/phpunit-snapshot-assertions": "^5.2.3",
+                "symfony/ux-icons": "^2.18|^3.0"
+            },
+            "type": "symfony-ux-map-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\Map\\Bridge\\Leaflet\\": "src/"
+                },
+                "exclude-from-classmap": []
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hugo Alliaume",
+                    "email": "hugo@alliau.me"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony UX Map Leaflet Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "leaflet",
+                "map",
+                "symfony-ux"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/ux-leaflet-map/tree/v3.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-07-27T05:38:40+00:00"
+        },
+        {
             "name": "symfony/ux-map",
             "version": "v3.4.0",
             "source": {
@@ -6553,12 +6628,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/uhifadhilabs/uhifadhi.git",
-                "reference": "7f1f329c752b3eb634cdd2c8f5e2a29efe968dc9"
+                "reference": "11c9abbb34a8823f0e109878879fa9c858d53b18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/7f1f329c752b3eb634cdd2c8f5e2a29efe968dc9",
-                "reference": "7f1f329c752b3eb634cdd2c8f5e2a29efe968dc9",
+                "url": "https://api.github.com/repos/uhifadhilabs/uhifadhi/zipball/11c9abbb34a8823f0e109878879fa9c858d53b18",
+                "reference": "11c9abbb34a8823f0e109878879fa9c858d53b18",
                 "shasum": ""
             },
             "require": {
@@ -6594,6 +6669,7 @@
                 "symfony/uid": "^7.3 || ^8.0",
                 "symfony/ux-chartjs": "^2.20 || ^3.0",
                 "symfony/ux-icons": "^2.20 || ^3.0",
+                "symfony/ux-leaflet-map": "^2.20 || ^3.0",
                 "symfony/ux-map": "^2.20 || ^3.0",
                 "twig/twig": "^3.14"
             },
@@ -6694,7 +6770,7 @@
                 "source": "https://github.com/uhifadhilabs/uhifadhi/tree/main",
                 "issues": "https://github.com/uhifadhilabs/uhifadhi/issues"
             },
-            "time": "2026-09-10T11:28:44+00:00"
+            "time": "2026-09-10T16:11:25+00:00"
         }
     ],
     "packages-dev": [

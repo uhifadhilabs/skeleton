@@ -6,6 +6,12 @@
                 "fetch": "eager"
             }
         },
+        "@symfony/ux-leaflet-map": {
+            "map": {
+                "enabled": true,
+                "fetch": "lazy"
+            }
+        },
         "@uhifadhi/uhifadhi": {
             "theme": {
                 "enabled": true,
@@ -31,19 +37,15 @@
                 "enabled": true,
                 "fetch": "lazy"
             },
+            "map-plate": {
+                "enabled": true,
+                "fetch": "eager"
+            },
             "area-register": {
                 "enabled": true,
                 "fetch": "eager"
             },
             "area-upload": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "area-map": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "area-index-map": {
                 "enabled": true,
                 "fetch": "eager"
             },
