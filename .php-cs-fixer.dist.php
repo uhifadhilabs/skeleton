@@ -9,7 +9,7 @@ $finder = (new PhpCsFixer\Finder())
     ->notPath('reference.php')
     // Flex rewrites config/bundles.php whole on every bundle install; a header
     // written into it lasts until the next recipe, so the file is not held to one.
-    ->notPath('config/bundles.php');
+    ->notPath('bundles.php');
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
