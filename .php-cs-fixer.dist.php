@@ -6,7 +6,10 @@ $finder = (new PhpCsFixer\Finder())
     ->in([__DIR__.'/src', __DIR__.'/tests', __DIR__.'/config', __DIR__.'/public'])
     // Auto-generated Symfony config-reference dump (gitignored, regenerated) —
     // "for apps only", not our code; php-cs-fixer's finder ignores .gitignore.
-    ->notPath('reference.php');
+    ->notPath('reference.php')
+    // Flex rewrites config/bundles.php whole on every bundle install; a header
+    // written into it lasts until the next recipe, so the file is not held to one.
+    ->notPath('config/bundles.php');
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
