@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Production php.ini + opcache tuning.
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY .docker/opcache.ini $PHP_INI_DIR/conf.d/zz-opcache.ini
+COPY .docker/uploads.ini $PHP_INI_DIR/conf.d/zz-uploads.ini
 
 ENV APP_ENV=prod \
     APP_DEBUG=0 \
