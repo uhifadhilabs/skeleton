@@ -45,8 +45,7 @@ final class StimulusControllersTest extends KernelTestCase
         yield 'departments' => ['uhifadhi--team-bundle--department'];
         yield 'the area register' => ['uhifadhi--area-bundle--area-register'];
         yield 'an area upload' => ['uhifadhi--area-bundle--area-upload'];
-        yield 'an area map' => ['uhifadhi--area-bundle--area-map'];
-        yield 'the register map' => ['uhifadhi--area-bundle--area-index-map'];
+        yield 'the map plate' => ['uhifadhi--atlas-bundle--map-plate'];
         yield 'the boundary presets' => ['uhifadhi--area-bundle--area-presets'];
         yield 'the module order' => ['uhifadhi--area-bundle--module-order'];
     }
