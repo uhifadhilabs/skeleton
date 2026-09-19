@@ -149,30 +149,15 @@ requirements are pinned at `@dev` is
 uhifadhi stores gazetted boundaries as PostGIS geometry, so the database needs
 the PostGIS extension.
 
-`fundi` runs a native PostGIS cluster and wires the application to it:
+The project ships a `compose.yaml` with a PostGIS image, and `.env` already
+points `DATABASE_URL` at it:
 
 ```bash
-fundi init
+docker compose up -d
 ```
 
-That writes `.fundi.local.yaml`. Open it and uncomment the one-line PostGIS
-opt-in:
-
-```yaml
-database: postgis   # your ACTIVE (brew-linked) Postgres major, db = this dir's slug
-```
-
-It needs the toolchain once per Postgres major: `brew install postgresql@17
-postgis`. Then:
-
-```bash
-fundi server:start
-```
-
-This creates `.env.local` with `DATABASE_URL`, spins up a PostGIS cluster,
-creates this project's database, enables the `postgis` extension in it, and
-serves the application over SSL at `https://park.localhost`. You write nothing
-into `.env`.
+That starts a PostGIS cluster on `127.0.0.1:5432` with the `postgis` extension
+available to the `app` database. You write nothing into `.env`.
 
 To use a database of your own instead, set `DATABASE_URL` in `.env.local`
 yourself. You do not need to run `CREATE EXTENSION postgis` in it — the core's
@@ -252,12 +237,12 @@ administrator of an installation with nobody else in it. `--tier=admin` and
 ## 5. Serve it
 
 ```bash
-fundi server:start
+symfony server:start -d
 ```
 
-Open `https://park.localhost` and sign in as the administrator from step 4.
-Without `fundi`, `symfony server:start -d`, or `php -S 127.0.0.1:8000 -t public`
-for a quick look.
+Open the address it prints and sign in as the administrator from step 4.
+Without the Symfony CLI, `php -S 127.0.0.1:8000 -t public` serves it for a
+quick look.
 
 ## 6. Add modules
 
