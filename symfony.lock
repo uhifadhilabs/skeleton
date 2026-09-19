@@ -61,9 +61,6 @@
             ".php-cs-fixer.dist.php"
         ]
     },
-    "fundistadi/postgis-bundle": {
-        "version": "v0.5.1"
-    },
     "phpunit/phpunit": {
         "version": "13.3",
         "recipe": {
