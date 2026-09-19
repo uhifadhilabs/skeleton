@@ -38,7 +38,8 @@
         "symfony/runtime": "8.1.*",
         "symfony/security-bundle": "8.1.*",
         "symfony/yaml": "8.1.*",
-        "uhifadhi/uhifadhi": "^1.0@dev"
+        "uhifadhi/uhifadhi": "^1.0@dev",
+        "utafitilabs/postgis-bundle": "^0.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.95.25",

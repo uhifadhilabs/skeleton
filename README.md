@@ -97,7 +97,7 @@ is a word for developers.
 ## Spatial data and deployment
 
 Spatial data lives in **PostGIS**, through
-[`fundistadi/postgis-bundle`](https://github.com/fundistadi/postgis-bundle),
+[`utafitilabs/postgis-bundle`](https://github.com/utafitilabs/postgis-bundle),
 which the core brings with it. Geometry columns are typed —
 `geometry(MultiPolygon,4326)` for a gazetted boundary, `point`, `linestring` —
 and they get their GiST indexes from the mapping. The core ships the migrations

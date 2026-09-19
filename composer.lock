@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ef6f1cec63dd3c1d44d9345fcab6efc",
+    "content-hash": "59b87fc3b8de73063b5cb11c1b630461",
     "packages": [
         {
             "name": "api-platform/core",
@@ -7326,6 +7326,73 @@
                 "issues": "https://github.com/uhifadhilabs/uhifadhi/issues"
             },
             "time": "2026-09-12T12:23:58+00:00"
+        },
+        {
+            "name": "utafitilabs/postgis-bundle",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/utafitilabs/postgis-bundle.git",
+                "reference": "f14fff2d3f354e066c3c7bc9e96e99cf45501873"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/utafitilabs/postgis-bundle/zipball/f14fff2d3f354e066c3c7bc9e96e99cf45501873",
+                "reference": "f14fff2d3f354e066c3c7bc9e96e99cf45501873",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^4.0",
+                "doctrine/doctrine-bundle": "^3.0",
+                "doctrine/orm": "^3.5",
+                "php": ">=8.4",
+                "symfony/framework-bundle": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpstan/phpstan": "^2.2",
+                "phpunit/phpunit": "^13.2",
+                "symfony/dependency-injection": "^7.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UtafitiLabs\\PostGISBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ezekiel Mjema",
+                    "homepage": "https://github.com/eemjema"
+                }
+            ],
+            "description": "PostGIS spatial types, automatic GiST indexing, and ST_* DQL functions for Doctrine ORM 3 / DBAL 4 on Symfony.",
+            "keywords": [
+                "dbal",
+                "doctrine",
+                "geojson",
+                "geometry",
+                "gis",
+                "orm",
+                "postgis",
+                "postgresql",
+                "spatial",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/utafitilabs/postgis-bundle/issues",
+                "source": "https://github.com/utafitilabs/postgis-bundle/tree/v0.1.0"
+            },
+            "time": "2026-09-19T19:01:29+00:00"
         },
         {
             "name": "willdurand/negotiation",

@@ -295,5 +295,8 @@
             "config/routes/shell.yaml",
             "config/routes/team.yaml"
         ]
+    },
+    "utafitilabs/postgis-bundle": {
+        "version": "v0.1.0"
     }
 }
