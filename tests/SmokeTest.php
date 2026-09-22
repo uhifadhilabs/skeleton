@@ -48,7 +48,8 @@ final class SmokeTest extends KernelTestCase
      */
     public static function mountedRoutes(): iterable
     {
-        yield 'the welcome page' => ['welcome', '/'];
+        // THE ROOT IS THE CONTROL ROOM — the organisation's dashboard, which every account reaches.
+        yield 'the control room' => ['organisation_dashboard', '/'];
         yield 'the sign-in screen' => ['team_login', '/login'];
         yield 'the area register' => ['area_index', '/areas'];
         // The name is the core's, and the assertion is on the address as much

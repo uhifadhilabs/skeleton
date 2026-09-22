@@ -29,6 +29,18 @@
                 "enabled": true,
                 "fetch": "eager"
             },
+            "confirm-modal": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "grants": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
+            "folds": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
             "permission-group": {
                 "enabled": true,
                 "fetch": "lazy"
@@ -37,7 +49,19 @@
                 "enabled": true,
                 "fetch": "lazy"
             },
+            "matrix": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
+            "scope": {
+                "enabled": true,
+                "fetch": "eager"
+            },
             "map-plate": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "chart-plate": {
                 "enabled": true,
                 "fetch": "eager"
             },
@@ -54,6 +78,14 @@
                 "fetch": "eager"
             },
             "module-order": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "station-point": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "register-fold": {
                 "enabled": true,
                 "fetch": "eager"
             }
