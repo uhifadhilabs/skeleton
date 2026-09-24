@@ -139,7 +139,9 @@ final class FleetGateTest extends TestCase
             // The sibling checkouts stand in for the published repositories:
             // the core now, each module as it is required.
             self::pointAt('uhifadhi/uhifadhi', self::workspace().'/uhifadhi');
-            self::shell(['composer', 'update', 'uhifadhi/uhifadhi', '--no-interaction', '--no-progress'], self::$project, 'head: core from the checkout');
+            // The branch by name: `@dev` alone would still prefer a tag where
+            // one exists, and a tag is exactly what head mode must not test.
+            self::shell(['composer', 'require', 'uhifadhi/uhifadhi:dev-main', '--no-interaction', '--no-progress'], self::$project, 'head: core from the checkout');
         }
 
         self::assertFileExists(self::$project.'/config/bundles.php');
@@ -169,7 +171,8 @@ final class FleetGateTest extends TestCase
         if ('head' === self::$mode) {
             self::pointAt('uhifadhi/devkit-module', self::workspace().'/devkit-module');
         }
-        self::shell(['composer', 'require', '--dev', 'uhifadhi/devkit-module:^0.1@dev', '--no-interaction', '--no-progress'], $project, 'README §4 devkit');
+        $devkit = 'head' === self::$mode ? 'uhifadhi/devkit-module:dev-main' : 'uhifadhi/devkit-module:^0.1@dev';
+        self::shell(['composer', 'require', '--dev', $devkit, '--no-interaction', '--no-progress'], $project, 'README §4 devkit');
         $out = self::shell([
             'php', 'bin/console', 'team:user:create', self::ADMIN_EMAIL, 'Ada', 'Mwangi',
             '--tier=super-admin', '--password='.self::ADMIN_PASSWORD, '--no-interaction',
@@ -199,7 +202,7 @@ final class FleetGateTest extends TestCase
 
             if ('head' === self::$mode) {
                 self::pointAt($package, self::workspace().'/'.$module.'-module');
-                self::shell(['composer', 'require', $package.':@dev', '--no-interaction', '--no-progress'], $project, $package.' require (head)');
+                self::shell(['composer', 'require', $package.':dev-main', '--no-interaction', '--no-progress'], $project, $package.' require (head)');
             } else {
                 // The README's own two lines: name the repository, then require.
                 self::shell(['composer', 'config', 'repositories.'.$module, 'vcs', 'https://github.com/uhifadhilabs/'.$module.'-module'], $project, $package.' repository');
