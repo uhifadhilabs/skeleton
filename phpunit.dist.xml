@@ -6,7 +6,8 @@
          colors="true"
          failOnDeprecation="true"
          failOnNotice="true"
-         failOnWarning="true">
+         failOnWarning="true"
+         defaultTestSuite="default">
     <php>
         <ini name="display_errors" value="1"/>
         <ini name="error_reporting" value="-1"/>
@@ -16,6 +17,12 @@
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>
+            <exclude>tests/Fleet</exclude>
+        </testsuite>
+        <!-- The fleet gate creates a whole project and installs every official
+             module; minutes, not seconds. `composer fleet-gate` runs it. -->
+        <testsuite name="fleet">
+            <directory>tests/Fleet</directory>
         </testsuite>
     </testsuites>
     <source restrictNotices="true" restrictWarnings="true">

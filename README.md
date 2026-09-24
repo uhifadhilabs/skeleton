@@ -246,11 +246,13 @@ quick look.
 
 ## 6. Add modules
 
-A module is one `composer require` and then the steps from section 3 again,
+A module is two `composer` lines and then the steps from section 3 again,
 because a module adds its own tables and its own assets — and, like the core,
-ships the versions that create them:
+ships the versions that create them. Until the modules are listed on Packagist,
+the first line tells composer where the module lives:
 
 ```bash
+composer config repositories.patrol vcs https://github.com/uhifadhilabs/patrol-module
 composer require uhifadhi/patrol-module
 php bin/console doctrine:migrations:migrate
 php bin/console cache:clear
@@ -259,6 +261,24 @@ php bin/console asset-map:compile
 
 The module then appears in the catalogue, and an administrator switches it on
 for the areas that want it from that area's module grid.
+
+### Official modules
+
+These are the modules the platform ships and keeps in step with the core.
+Install them in this order — a module that builds on another comes after it —
+each one with its two lines and the three commands above:
+
+| Module | What it adds | Lines |
+|---|---|---|
+| `uhifadhi/storage-module` | where evidence and photographs are kept; the modules below store through it | `composer config repositories.storage vcs https://github.com/uhifadhilabs/storage-module` · `composer require uhifadhi/storage-module` |
+| `uhifadhi/patrol-module` | patrols: planning, the handset's tracks and observations, maps, the calendar, exports | `composer config repositories.patrol vcs https://github.com/uhifadhilabs/patrol-module` · `composer require uhifadhi/patrol-module` |
+| `uhifadhi/incident-module` | incidents: the register, the board, area lists, evidence | `composer config repositories.incident vcs https://github.com/uhifadhilabs/incident-module` · `composer require uhifadhi/incident-module` |
+| `uhifadhi/roster-module` | duty: shifts, check-ins, who is on watch where | `composer config repositories.roster vcs https://github.com/uhifadhilabs/roster-module` · `composer require uhifadhi/roster-module` |
+| `uhifadhi/telemetry-module` | what the installation is doing: captures, crashes, server errors | `composer config repositories.telemetry vcs https://github.com/uhifadhilabs/telemetry-module` · `composer require uhifadhi/telemetry-module` |
+
+`uhifadhi/devkit-module` is not on this list on purpose: it is the
+development-only package from section 4, required with `--dev`, and a
+production build never carries it.
 
 ---
 

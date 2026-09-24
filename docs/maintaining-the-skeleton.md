@@ -8,6 +8,7 @@ came out of it. They have opposite jobs.
 
 - [The copy is frozen; the core is not](#the-copy-is-frozen-the-core-is-not)
 - [The version rhythm](#the-version-rhythm)
+- [The fleet gate](#the-fleet-gate)
 - [The recipe ledger](#the-recipe-ledger)
 - [What belongs here, and what does not](#what-belongs-here-and-what-does-not)
 
@@ -56,6 +57,15 @@ installation is a different one.
 
 A patch here says "the same installation, fixed". Raising the core constraint to
 a new minor never means that.
+
+## The fleet gate
+
+A tag anywhere in the fleet — this starter, the core, an official module — is
+not done until `composer fleet-gate` has run green here, and a change is not
+ready to tag until `composer fleet-gate:head` has. Both create a project from
+this starter with the README's own commands and install every official module
+into it, one by one. [fleet-gate.md](fleet-gate.md) has the steps, the two modes and
+how to read a red run.
 
 ## The recipe ledger
 
